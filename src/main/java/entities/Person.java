@@ -22,7 +22,7 @@ public class Person {
     @Column(name = "lastName", nullable = false, length = 45)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
@@ -32,7 +32,18 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "hobby_id"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
+    public Person(int id, String email, String firstName, String lastName, Address address) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
+
+    @OneToMany(mappedBy = "person")
+
+
+
     private Set<Phone> phones = new LinkedHashSet<>();
 
     public int getId() {

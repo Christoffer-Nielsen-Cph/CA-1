@@ -1,26 +1,25 @@
 package datafacades;
 
-import entities.Movie;
-import entities.Person;
-import entities.Phone;
+import entities.*;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
+import javax.enterprise.inject.New;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled
 class PhoneFacadeTest {
 
     private static EntityManagerFactory emf;
     private static IDataFacade<Phone> facade;
 
     Phone p1,p2;
-    Person h1 = new Person();
-    Person h2 = new Person();
+
 
     @BeforeAll
     public static void setUpClass() {
@@ -40,7 +39,14 @@ class PhoneFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
+
+            Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
+            Address a1 = new Address("Falkevej","blabla", cityinfo);
+            Address a2 = new Address("Birkevej","hubla",cityinfo);
+            Person h1 = new Person(1,"h@h.dk","Claus","Jensen",a1);
+            Person h2 = new Person(2,"b@b.dk","Rikke","Jensen",a2);
+
             p1 = new Phone(88888888, "Iphone",h1);
             p2 = new Phone(2020, "Titanic",h2);
 
@@ -61,7 +67,9 @@ class PhoneFacadeTest {
     @Test
     void create() {
         System.out.println("Testing create(Phone p)");
-        Phone p = new Phone(2022,"Rock",h1);
+        Address a1 = new Address("Falkevej","Hubaba");
+        Person pe = new Person(1,"p@p.dk","Oliver","Jensen",a1);
+        Phone p = new Phone(2022,"Rock",pe);
         p.setId(3);
         Phone expected = p;
         Phone actual   = facade.create(p);
