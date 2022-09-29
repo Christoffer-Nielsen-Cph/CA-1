@@ -1,6 +1,6 @@
 package dtos;
 
-import entities.Movie;
+
 import entities.Person;
 
 import java.util.ArrayList;
