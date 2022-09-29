@@ -18,7 +18,7 @@ public class Cityinfo {
     @Column(name = "city", nullable = false, length = 45)
     private String city;
 
-    @OneToMany(mappedBy = "cityinfo")
+    @OneToMany(mappedBy = "cityinfo", cascade = CascadeType.PERSIST)
     private Set<Address> addresses = new LinkedHashSet<>();
 
     public int getId() {

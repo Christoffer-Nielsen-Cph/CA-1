@@ -22,8 +22,17 @@ public class Address {
     @JoinColumn(name = "cityinfo_id", nullable = false)
     private Cityinfo cityinfo;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
     private Set<Person> people = new LinkedHashSet<>();
+
+    public Address() {
+    }
+
+    public Address(int id, String address, String additionalInfo) {
+        this.id = id;
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+    }
 
     public int getId() {
         return id;

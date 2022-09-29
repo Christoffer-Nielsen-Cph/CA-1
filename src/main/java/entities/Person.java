@@ -40,6 +40,9 @@ public class Person {
     @OneToMany (mappedBy = "person", cascade = CascadeType.PERSIST)
     private Set<Phone> phones = new LinkedHashSet<>();
 
+    public Person() {
+    }
+
     public Person(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
@@ -47,10 +50,12 @@ public class Person {
     }
 
 
-    public Person(String s, String ben, String dover, int addressId) {
+    public Person(String email, String firstName, String lastName, Address address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
     }
-
-
 
     public int getId() {
         return id;
