@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @NamedQueries({
@@ -74,5 +75,18 @@ public class Phone {
                 ", description='" + description + '\'' +
                 ", person=" + person +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+        Phone phone = (Phone) o;
+        return getId() == phone.getId() && getNumber() == phone.getNumber() && Objects.equals(getDescription(), phone.getDescription()) && Objects.equals(getPerson(), phone.getPerson());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNumber(), getDescription(), getPerson());
     }
 }

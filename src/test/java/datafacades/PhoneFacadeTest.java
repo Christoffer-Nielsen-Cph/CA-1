@@ -44,8 +44,8 @@ class PhoneFacadeTest {
             Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
             Address a1 = new Address("Falkevej","blabla", cityinfo);
             Address a2 = new Address("Birkevej","hubla",cityinfo);
-            Person h1 = new Person(1,"h@h.dk","Claus","Jensen",a1);
-            Person h2 = new Person(2,"b@b.dk","Rikke","Jensen",a2);
+            Person h1 = new Person("h@h.dk","Claus","Jensen",a1);
+            Person h2 = new Person("b@b.dk","Rikke","Jensen",a2);
 
             p1 = new Phone(88888888, "Iphone",h1);
             p2 = new Phone(2020, "Titanic",h2);
@@ -67,7 +67,8 @@ class PhoneFacadeTest {
     @Test
     void create() {
         System.out.println("Testing create(Phone p)");
-        Address a1 = new Address("Falkevej","Hubaba");
+        Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
+        Address a1 = new Address("Falkevej","Hubaba",cityinfo);
         Person pe = new Person(1,"p@p.dk","Oliver","Jensen",a1);
         Phone p = new Phone(2022,"Rock",pe);
         p.setId(3);
