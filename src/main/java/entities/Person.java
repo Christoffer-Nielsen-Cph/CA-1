@@ -35,6 +35,12 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private Set<Phone> phones = new LinkedHashSet<>();
 
+    public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public int getId() {
         return id;
     }
