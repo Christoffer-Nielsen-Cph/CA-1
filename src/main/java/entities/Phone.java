@@ -16,9 +16,18 @@ public class Phone {
     @Column(name = "description", nullable = false, length = 45)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
+
+    public Phone() {
+    }
+
+    public Phone(int number, String description, Person person) {
+        this.number = number;
+        this.description = description;
+        this.person = person;
+    }
 
     public int getId() {
         return id;
