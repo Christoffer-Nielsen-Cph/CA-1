@@ -45,7 +45,7 @@ public class PhoneDTO {
         if (this == o) return true;
         if (!(o instanceof PhoneDTO)) return false;
         PhoneDTO phoneDTO = (PhoneDTO) o;
-        return id == phoneDTO.id && number == phoneDTO.number && Objects.equals(description, phoneDTO.description) && Objects.equals(person, phoneDTO.person);
+        return id == phoneDTO.id && number == phoneDTO.number && description.equals(phoneDTO.description) && person.equals(phoneDTO.person);
     }
 
     @Override
