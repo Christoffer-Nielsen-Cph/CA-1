@@ -1,4 +1,4 @@
-/* package datafacades;
+package datafacades;
 
 import entities.*;
 import errorhandling.EntityNotFoundException;
@@ -114,4 +114,4 @@ class PhoneFacadeTest {
         assertEquals(expected, actual);
         assertEquals(p,p1);
     }
-} */
+}
