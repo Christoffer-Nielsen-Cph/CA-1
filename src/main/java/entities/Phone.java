@@ -20,6 +20,15 @@ public class Phone {
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
+    public Phone() {
+    }
+
+    public Phone(int number, String description, Person person) {
+        this.number = number;
+        this.description = description;
+        this.person = person;
+    }
+
     public int getId() {
         return id;
     }
