@@ -69,7 +69,7 @@ class PhoneFacadeTest {
         System.out.println("Testing create(Phone p)");
         Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
         Address a1 = new Address("Falkevej","Hubaba",cityinfo);
-        Person pe = new Person(1,"p@p.dk","Oliver","Jensen",a1);
+        Person pe = new Person("p@p.dk","Oliver","Jensen",a1);
         Phone p = new Phone(2022,"Rock",pe);
         p.setId(3);
         Phone expected = p;
