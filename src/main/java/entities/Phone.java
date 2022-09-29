@@ -1,8 +1,13 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Phone.deleteAllRows", query = "DELETE from Phone "),
+        @NamedQuery(name = "Phone.getAll", query = "SELECT p FROM Phone p"),
+})
 @Table(name = "phone")
 public class Phone {
     @Id
@@ -28,6 +33,7 @@ public class Phone {
         this.description = description;
         this.person = person;
     }
+
 
     public int getId() {
         return id;
@@ -69,5 +75,18 @@ public class Phone {
                 ", description='" + description + '\'' +
                 ", person=" + person +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Phone)) return false;
+        Phone phone = (Phone) o;
+        return getId() == phone.getId() && getNumber() == phone.getNumber() && Objects.equals(getDescription(), phone.getDescription()) && Objects.equals(getPerson(), phone.getPerson());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getNumber(), getDescription(), getPerson());
     }
 }
