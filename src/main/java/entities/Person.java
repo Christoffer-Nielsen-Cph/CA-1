@@ -34,6 +34,15 @@ public class Person {
 
     @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
     private Set<Phone> phones = new LinkedHashSet<>();
+    public Person(){}
+    public Person(String email, String firstName, String lastName, Address address, Set<Hobby> hobbies, Set<Phone> phones) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.hobbies = hobbies;
+        this.phones = phones;
+    }
 
     public int getId() {
         return id;
