@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -22,11 +23,11 @@ public class Address {
     @Column(name = "additionalInfo", length = 45)
     private String additionalInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cityinfo_id", nullable = false)
     private Cityinfo cityinfo;
 
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "address",cascade = CascadeType.PERSIST)
     private Set<Person> people = new LinkedHashSet<>();
 
     public int getId() {
@@ -99,5 +100,18 @@ public class Address {
                 ", cityinfo=" + cityinfo +
                 ", people=" + people +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address1 = (Address) o;
+        return getId() == address1.getId() && getAddress().equals(address1.getAddress()) && getAdditionalInfo().equals(address1.getAdditionalInfo()) && getCityinfo().equals(address1.getCityinfo());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getAddress(), getAdditionalInfo(), getCityinfo());
     }
 }

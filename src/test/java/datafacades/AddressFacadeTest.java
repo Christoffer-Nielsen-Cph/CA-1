@@ -38,7 +38,7 @@ class AddressFacadeTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         Cityinfo cityInfoOne = new Cityinfo(1,2670,"greve");
-        Cityinfo cityinfoTwo = new Cityinfo(1,2750,"ballerup");
+        Cityinfo cityinfoTwo = new Cityinfo(2,2750,"ballerup");
 
         try {
             em.getTransaction().begin();
@@ -70,12 +70,12 @@ class AddressFacadeTest {
         assertEquals(expected, actual);
     }
 
-/*
+
     @Test
     void getById() throws EntityNotFoundException {
         System.out.println("Testing getbyid(id)");
-        Movie expected = m1;
-        Movie actual = facade.getById(m1.getId());
+        Address expected = a1;
+        Address actual = facade.getById(a1.getId());
         assertEquals(expected, actual);
     }
 
@@ -89,10 +89,10 @@ class AddressFacadeTest {
 
     @Test
     void update() throws EntityNotFoundException {
-        System.out.println("Testing Update(Movie m)");
-        m2.setYear(1965);
-        Movie expected = m2;
-        Movie actual = facade.update(m2);
+        System.out.println("Testing Update(Address a)");
+        a1.setAddress("Ny addresse");
+        Address expected = a1;
+        Address actual = facade.update(a1);
         assertEquals(expected,actual);
     }
 
@@ -100,12 +100,11 @@ class AddressFacadeTest {
     @Test
     void delete() throws EntityNotFoundException {
         System.out.println("Testing delete(id)");
-        Movie m = facade.delete(m1.getId());
+        Address a = facade.delete(a1.getId());
         int expected = 1;
         int actual = facade.getAll().size();
         assertEquals(expected, actual);
-        assertEquals(m,m1);
+        assertEquals(a,a1);
     }
 
- */
 }
