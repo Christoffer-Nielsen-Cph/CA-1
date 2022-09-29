@@ -8,6 +8,7 @@ String lastName
 String username
 String password
 Arraylist<Hobby> hobbies
+Arraylist<Person> friends
 Adresse addrese
 Phone phoneNumber
 removeHobby()
