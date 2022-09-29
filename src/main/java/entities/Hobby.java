@@ -5,6 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Hobby.deleteAllRows", query = "DELETE from Hobby"),
+        @NamedQuery(name = "Hobby.getAll", query = "SELECT h FROM Hobby h"),
+})
 @Table(name = "hobby")
 public class Hobby {
     @Id

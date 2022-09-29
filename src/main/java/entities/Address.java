@@ -20,6 +20,13 @@ public class Address {
     @JoinColumn(name = "cityinfo_id", nullable = false)
     private Cityinfo cityinfo;
 
+    public Address(){}
+    public Address(String address, String additionalInfo, Cityinfo cityinfo) {
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+        this.cityinfo = cityinfo;
+    }
+
     public Integer getId() {
         return id;
     }

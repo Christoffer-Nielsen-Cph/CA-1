@@ -10,12 +10,12 @@ public class PersonsHobby {
     private PersonsHobbyId id;
 
     @MapsId("hobbyId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "hobby_id", nullable = false)
     private Hobby hobby;
 
     @MapsId("personId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
