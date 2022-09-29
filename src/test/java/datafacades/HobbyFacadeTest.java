@@ -1,7 +1,5 @@
 package datafacades;
-import entities.Hobby;
-import entities.Movie;
-import entities.Person;
+import entities.*;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -13,8 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-@Disabled
-class HobbyFacadeTest {
+public class HobbyFacadeTest {
 
     private static EntityManagerFactory emf;
     private static IDataFacade<Hobby> facade;
@@ -37,16 +34,15 @@ class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
-
             Set<Person> h1Set = new HashSet<>();
-           // Person person1 = new Person("anders@meinicke","Anders","Meinicke","Robertjacobsens vej 14p",);
-            Person person2 = new Person();
-           // h1Set.add(person1);
+            em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
+            Person person1 = new Person("anders@meinicke.dk","Anders","Meinicke",null,null,null);
+            Person person2 = new Person("emil@meinicke.dk","Emil","Meinicke",null,null,null);
+            h1Set.add(person1);
             h1Set.add(person2);
             Set<Person> h2Set = new HashSet<>();
-            Person person3 = new Person();
-            Person person4 = new Person();
+            Person person3 = new Person("christopher@ottesen.dk","Christopher","Ottesen",null,null,null);
+            Person person4 = new Person("someone@iknow.dk","Someone","Iknow",null,null,null);
             h2Set.add(person3);
             h2Set.add(person4);
             h1 = new Hobby();
