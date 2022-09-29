@@ -28,7 +28,7 @@ public class Person {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id", nullable = true)
     private Address address;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -56,6 +56,8 @@ public class Person {
         this.lastName = lastName;
         this.address = address;
     }
+
+
 
     public int getId() {
         return id;
@@ -131,11 +133,11 @@ public class Person {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName());
+        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getAddress().equals(person.getAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName());
+        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName(), getAddress());
     }
 }

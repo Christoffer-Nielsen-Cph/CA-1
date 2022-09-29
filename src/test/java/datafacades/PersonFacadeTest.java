@@ -1,6 +1,7 @@
 package datafacades;
 
 import entities.Address;
+import entities.Cityinfo;
 import entities.Person;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -35,8 +36,10 @@ class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        Address addressOne = new Address(1,"knøsen 52","no");
-        Address addressTwo = new Address(2,"sankt jacobsvej","huehue");
+        Cityinfo cityinfoOne = new Cityinfo(1,2670,"greve");
+        Cityinfo cityinfoTwo = new Cityinfo(2,2750,"ballerup");
+        Address addressOne = new Address("knøsen 52","huehue",cityinfoOne);
+        Address addressTwo = new Address("sankt jacobsvej","test",cityinfoTwo);
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
@@ -60,7 +63,9 @@ class PersonFacadeTest {
     @Test
     void create() {
         System.out.println("Testing create(Person p)");
-        Person p = new Person("jegErEnLilleNisse@mail.com","Christoffer","Nielsen");
+        Cityinfo cityinfo = new Cityinfo(4,1000,"Kbh");
+        Address address = new Address(1,"nisseland","jul",cityinfo);
+        Person p = new Person("jegErEnLilleNisse@mail.com","Christoffer","Nielsen",address);
         p.setId(3);
         Person expected = p;
         Person actual   = facade.create(p);

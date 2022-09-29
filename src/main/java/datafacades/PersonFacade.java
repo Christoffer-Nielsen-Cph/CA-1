@@ -1,5 +1,6 @@
 package datafacades;
 
+import entities.Address;
 import entities.Person;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
@@ -44,7 +45,7 @@ public class PersonFacade implements IDataFacade<Person> {
     @Override
     public Person create(Person p){
         EntityManager em = getEntityManager();
-        Person person = new Person(p.getEmail(),p.getFirstName(),p.getLastName());
+        Person person = new Person(p.getEmail(),p.getFirstName(),p.getLastName(),p.getAddress());
         try {
             em.getTransaction().begin();
             em.persist(person);
