@@ -29,6 +29,16 @@ public class Address {
         return id;
     }
 
+    public Address() {
+    }
+
+    public Address(String address, String additionalInfo, Cityinfo cityinfo, Set<Person> people) {
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+        this.cityinfo = cityinfo;
+        this.people = people;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
