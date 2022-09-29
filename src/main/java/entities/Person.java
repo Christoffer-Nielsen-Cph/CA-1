@@ -6,6 +6,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person "),
+        @NamedQuery(name = "Person.getAll", query = "SELECT p FROM Person p"),
+})
+
 @Table(name = "person")
 public class Person {
     @Id
@@ -23,7 +28,7 @@ public class Person {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id", nullable = true)
     private Address address;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -32,7 +37,7 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "hobby_id"))
     private Set<Hobby> hobbies = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "person",cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "person", cascade = CascadeType.PERSIST)
     private Set<Phone> phones = new LinkedHashSet<>();
     public Person(){}
     public Person(String email, String firstName, String lastName, Address address, Set<Hobby> hobbies, Set<Phone> phones) {
@@ -43,6 +48,25 @@ public class Person {
         this.hobbies = hobbies;
         this.phones = phones;
     }
+
+    public Person() {
+    }
+
+    public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+
+    public Person(String email, String firstName, String lastName, Address address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
+
+
 
     public int getId() {
         return id;
@@ -118,11 +142,11 @@ public class Person {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName());
+        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getAddress().equals(person.getAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName());
+        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName(), getAddress());
     }
 }
