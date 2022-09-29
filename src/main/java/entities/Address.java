@@ -1,8 +1,6 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "address")
@@ -10,7 +8,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "address", nullable = false, length = 45)
     private String address;
@@ -22,14 +20,11 @@ public class Address {
     @JoinColumn(name = "cityinfo_id", nullable = false)
     private Cityinfo cityinfo;
 
-    @OneToMany(mappedBy = "address")
-    private Set<Person> people = new LinkedHashSet<>();
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,22 +52,4 @@ public class Address {
         this.cityinfo = cityinfo;
     }
 
-    public Set<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(Set<Person> people) {
-        this.people = people;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", additionalInfo='" + additionalInfo + '\'' +
-                ", cityinfo=" + cityinfo +
-                ", people=" + people +
-                '}';
-    }
 }
