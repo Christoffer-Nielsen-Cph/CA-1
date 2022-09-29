@@ -3,6 +3,10 @@ package entities;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Phone.deleteAllRows", query = "DELETE from Phone "),
+        @NamedQuery(name = "Phone.getAll", query = "SELECT p FROM Phone p"),
+})
 @Table(name = "phone")
 public class Phone {
     @Id
