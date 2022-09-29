@@ -48,6 +48,13 @@ public class Address {
         this.cityinfo = cityinfo;
     }
 
+    public Address(int id, String address, String additionalInfo, Cityinfo cityinfo) {
+        this.id = id;
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+        this.cityinfo = cityinfo;
+    }
+
     public Address(String address, String additionalInfo, Cityinfo cityinfo, Set<Person> people) {
         this.address = address;
         this.additionalInfo = additionalInfo;
