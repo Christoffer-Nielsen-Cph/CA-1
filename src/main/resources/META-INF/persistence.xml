@@ -39,7 +39,13 @@
         <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!--            <class>entities.RenameMe</class>-->
-
+        <class>entities.Address</class>
+        <class>entities.Cityinfo</class>
+        <class>entities.Hobby</class>
+        <class>entities.Person</class>
+        <class>entities.PersonsHobby</class>
+        <class>entities.PersonsHobbyId</class>
+        <class>entities.Phone</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         

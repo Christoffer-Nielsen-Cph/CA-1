@@ -47,6 +47,9 @@ class PhoneFacadeTest {
             Person h1 = new Person("h@h.dk","Claus","Jensen",a1);
             Person h2 = new Person("b@b.dk","Rikke","Jensen",a2);
 
+            em.persist(h1);
+            em.persist(h2);
+
             p1 = new Phone(88888888, "Iphone",h1);
             p2 = new Phone(2020, "Titanic",h2);
 
