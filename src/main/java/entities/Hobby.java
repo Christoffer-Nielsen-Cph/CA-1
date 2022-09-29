@@ -20,6 +20,12 @@ public class Hobby {
             joinColumns = @JoinColumn(name = "hobby_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Set<Person> people = new LinkedHashSet<>();
+    public Hobby(){}
+
+    public Hobby(String description, Set<Person> people) {
+        this.description = description;
+        this.people = people;
+    }
 
     public int getId() {
         return id;
