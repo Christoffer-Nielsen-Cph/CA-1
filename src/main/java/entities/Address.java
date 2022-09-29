@@ -5,6 +5,10 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Address.deleteAllRows", query = "DELETE from Address"),
+        @NamedQuery(name = "Address.getAll", query = "SELECT a FROM Address a"),
+})
 @Table(name = "address")
 public class Address {
     @Id
@@ -30,6 +34,17 @@ public class Address {
     }
 
     public Address() {
+    }
+
+    public Address(String address, String additionalInfo) {
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+    }
+
+    public Address(String address, String additionalInfo, Cityinfo cityinfo) {
+        this.address = address;
+        this.additionalInfo = additionalInfo;
+        this.cityinfo = cityinfo;
     }
 
     public Address(String address, String additionalInfo, Cityinfo cityinfo, Set<Person> people) {

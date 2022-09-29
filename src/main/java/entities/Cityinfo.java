@@ -25,6 +25,15 @@ public class Cityinfo {
         return id;
     }
 
+    public Cityinfo() {
+    }
+
+    public Cityinfo(int id, int zipCode, String city) {
+        this.id = id;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
