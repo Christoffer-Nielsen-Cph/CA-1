@@ -41,12 +41,12 @@ public class HobbyDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HobbyDTO HobbyDTO = (HobbyDTO) o;
-        return id == HobbyDTO.id && desciption == HobbyDTO.desciption && people.equals(HobbyDTO.people);
+        HobbyDTO hobbyDTO = (HobbyDTO) o;
+        return id == hobbyDTO.id && desciption.equals(hobbyDTO.desciption) && people.equals(hobbyDTO.people);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, people, desciption);
+        return Objects.hash(id, desciption, people);
     }
 }
