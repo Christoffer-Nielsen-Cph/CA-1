@@ -2,6 +2,7 @@ package datafacades;
 
 import entities.Address;
 import entities.Cityinfo;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -40,8 +41,11 @@ class CityInfoFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Cityinfo.deleteAllRows").executeUpdate();
+
+
             c1 = new Cityinfo(2670,"greve");
             c2 = new Cityinfo(2750,"ballerup");
+
 
             em.persist(c1);
             em.persist(c2);
