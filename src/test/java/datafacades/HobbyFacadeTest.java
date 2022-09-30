@@ -15,7 +15,7 @@ public class HobbyFacadeTest {
 
     private static EntityManagerFactory emf;
     private static IDataFacade<Hobby> facade;
-
+    Person person1, person2, person3, person4;
     Hobby h1,h2;
 
     @BeforeAll
@@ -36,17 +36,19 @@ public class HobbyFacadeTest {
             em.getTransaction().begin();
             Set<Person> h1Set = new HashSet<>();
             em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
-            Person person1 = new Person("anders@meinicke.dk","Anders","Meinicke",null,null,null);
-            Person person2 = new Person("emil@meinicke.dk","Emil","Meinicke",null,null,null);
+            person1 = new Person("anders@meinicke.dk","Anders","Meinicke");
+            person2 = new Person("emil@meinicke.dk","Emil","Meinicke");
+            em.persist(person1);
+            em.persist(person2);
             h1Set.add(person1);
             h1Set.add(person2);
             Set<Person> h2Set = new HashSet<>();
-            Person person3 = new Person("christopher@ottesen.dk","Christopher","Ottesen",null,null,null);
-            Person person4 = new Person("someone@iknow.dk","Someone","Iknow",null,null,null);
+            person3 = new Person("christopher@ottesen.dk","Christopher","Ottesen");
+            person4 = new Person("someone@iknow.dk","Someone","Iknow");
             h2Set.add(person3);
             h2Set.add(person4);
-            h1 = new Hobby();
-            h2 = new Hobby();
+            h1 = new Hobby("Karate",h1Set);
+            h2 = new Hobby("Swimming",h2Set);
 
             em.persist(h1);
             em.persist(h2);
@@ -55,5 +57,40 @@ public class HobbyFacadeTest {
         } finally {
             em.close();
         }
+    }
+    @Test
+    void create() {
+        Set<Person> h3set = new HashSet<>();
+        Person p = new Person("jegErEnLilleNisse@mail.com","Christoffer","Nielsen");
+        h3set.add(p);
+        Hobby h3 = new Hobby("Creating Cults", h3set);
+        h3.setId(3);
+        Hobby expected = h3;
+        Hobby actual = facade.create(h3);
+        assertEquals(expected, actual);
+    }
+    @Test
+    void getById() throws EntityNotFoundException {
+        System.out.println("Testing getbyid(id)");
+        Hobby expected = h1;
+        Hobby actual = facade.getById(h1.getId());
+        assertEquals(expected.getDescription(), actual.getDescription());
+    }
+    @Test
+    void getAll() {
+        System.out.println("Testing getAll()");
+        int expected = 2;
+        int actual = facade.getAll().size();
+        assertEquals(expected,actual);
+    }
+    @Test
+    void update() throws EntityNotFoundException {
+        System.out.println("Testing Update");
+        person2.setEmail("mynew@email.com");
+        h1.getPeople().remove(person2);
+        h1.getPeople().add(person2);
+        Hobby expected = h1;
+        Hobby actual = facade.update(h1);
+        assertEquals(expected,actual);
     }
 }
