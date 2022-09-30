@@ -40,9 +40,9 @@ class PersonFacadeTest {
         Cityinfo cityinfoTwo = new Cityinfo(2,2750,"ballerup");
         Address addressOne = new Address("knøsen 52","huehue",cityinfoOne);
         Address addressTwo = new Address("sankt jacobsvej","test",cityinfoTwo);
+        em.createNamedQuery("Person.deleteAllRows").executeUpdate();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             p1 = new Person("email@email.com", "Postmand", "Per",addressOne);
             p2 = new Person("amen@altså.com", "Ben", "Dover",addressTwo);
 
