@@ -124,7 +124,9 @@ public class Person {
         this.phones = phones;
     }
 
-
+    public void addPhone(Phone phone){
+        phones.add(phone);
+    }
     @Override
     public String toString() {
         return "Person{" +
