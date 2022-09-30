@@ -101,7 +101,7 @@ public class PersonFacade implements IDataFacade<Person> {
         return p;
     }
 
-    public Person addPhoneToPerson(long phoneID, long personID){
+    public Person addPhoneToPerson(int phoneID, int personID){
         EntityManager em = emf.createEntityManager();
         Phone phone = em.find(Phone.class, phoneID);
         Person person = em.find(Person.class, personID);

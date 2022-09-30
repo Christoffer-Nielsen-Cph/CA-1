@@ -3,6 +3,7 @@ package datafacades;
 import entities.Hobby;
 import entities.Movie;
 import entities.Person;
+import entities.Phone;
 import errorhandling.EntityNotFoundException;
 
 import javax.persistence.EntityManager;
@@ -84,6 +85,16 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         em.remove(h);
         em.getTransaction().commit();
         return h;
+    }
+    public Hobby addHobbyToPerson(int hobbyID, int personID){
+        EntityManager em = emf.createEntityManager();
+        Hobby hobby = em.find(Hobby.class, hobbyID);
+        Person person = em.find(Person.class, personID);
+        em.getTransaction().begin();
+        person.addHobby(hobby);
+        em.getTransaction().commit();
+        em.close();
+        return hobby;
     }
 }
 

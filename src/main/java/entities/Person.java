@@ -127,6 +127,10 @@ public class Person {
     public void addPhone(Phone phone){
         phones.add(phone);
     }
+
+    public void addHobby(Hobby hobby){
+        hobbies.add(hobby);
+    }
     @Override
     public String toString() {
         return "Person{" +
