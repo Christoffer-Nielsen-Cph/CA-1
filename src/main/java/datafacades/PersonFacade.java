@@ -1,6 +1,7 @@
 package datafacades;
 
 import entities.Address;
+import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 import errorhandling.EntityNotFoundException;
@@ -9,7 +10,9 @@ import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -98,11 +101,31 @@ public class PersonFacade implements IDataFacade<Person> {
         return p;
     }
 
+    public Person addPhoneToPerson(long phoneID, long personID){
+        EntityManager em = emf.createEntityManager();
+        Phone phone = em.find(Phone.class, phoneID);
+        Person person = em.find(Person.class, personID);
+        em.getTransaction().begin();
+            person.addPhone(phone);
+        em.getTransaction().commit();
+        em.close();
+        return person;
+    }
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         IDataFacade fe = getPersonFacade(emf);
         fe.getAll().forEach(dto->System.out.println(dto));
+
+       /* Address address = new Address("Mariager","9550");
+        Set<Phone> phones = new HashSet<>();
+        Phone phone = new Phone(888888,"Iphone");
+        Set<Hobby> hobbies = new HashSet<>();
+        phones.add(phone);
+        Person person = new Person("a@a.dk","Oliver","Jensen",address,hobbies,phones);
+
+        System.out.println(person);
+        */
     }
 }
 
