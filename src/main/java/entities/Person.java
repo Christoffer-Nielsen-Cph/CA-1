@@ -145,7 +145,7 @@ public class Person {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName());
+        return getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName());
     }
 
     @Override
