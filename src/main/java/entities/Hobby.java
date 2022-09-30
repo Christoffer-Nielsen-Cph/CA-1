@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,7 @@ public class Hobby {
     @Column(name = "description", nullable = false, length = 45)
     private String description;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "persons_hobbies",
             joinColumns = @JoinColumn(name = "hobby_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
@@ -29,6 +30,19 @@ public class Hobby {
     public Hobby(String description, Set<Person> people) {
         this.description = description;
         this.people = people;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hobby hobby = (Hobby) o;
+        return id == hobby.id && Objects.equals(description, hobby.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description);
     }
 
     public int getId() {
@@ -54,6 +68,8 @@ public class Hobby {
     public void setPeople(Set<Person> people) {
         this.people = people;
     }
+
+
 
     @Override
     public String toString() {

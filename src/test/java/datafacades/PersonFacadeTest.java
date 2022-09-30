@@ -40,6 +40,7 @@ class PersonFacadeTest {
         Cityinfo cityinfoTwo = new Cityinfo(2,2750,"ballerup");
         Address addressOne = new Address("knøsen 52","huehue",cityinfoOne);
         Address addressTwo = new Address("sankt jacobsvej","test",cityinfoTwo);
+
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
