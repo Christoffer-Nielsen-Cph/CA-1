@@ -111,11 +111,21 @@ public class PersonFacade implements IDataFacade<Person> {
         em.close();
         return person;
     }
+    public Person addHobbyToPerson(int hobbyID, int personID){
+        EntityManager em = emf.createEntityManager();
+        Hobby hobby = em.find(Hobby.class, hobbyID);
+        Person person = em.find(Person.class, personID);
+        em.getTransaction().begin();
+        person.addHobby(hobby);
+        em.getTransaction().commit();
+        em.close();
+        return person;
+    }
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         IDataFacade fe = getPersonFacade(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
+
 
        /* Address address = new Address("Mariager","9550");
         Set<Phone> phones = new HashSet<>();

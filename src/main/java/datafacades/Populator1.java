@@ -7,9 +7,7 @@ package datafacades;
 
 import javax.persistence.EntityManagerFactory;
 
-import entities.Address;
-import entities.Cityinfo;
-import entities.Person;
+import entities.*;
 import utils.EMF_Creator;
 
 /**
@@ -19,10 +17,14 @@ import utils.EMF_Creator;
 public class Populator1 {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade pf = PersonFacade.getPersonFacade(emf);
+        IDataFacade <Person> pf = PersonFacade.getPersonFacade(emf);
+        PersonFacade personFacade = (PersonFacade) PersonFacade.getPersonFacade(emf);
+        IDataFacade <Hobby> hobby = HobbyFacade.getHobbyFacade(emf);
+        IDataFacade <Phone> phone = PhoneFacade.getPhoneFacade(emf);
         Person p1 = new Person("test@test.com","Test","Testesen",new Address("Testvej 1","Testtest",new Cityinfo(1,2323,"Testby")));
         Person p2 = new Person("second@second.com","Second","Secondsen",new Address("Secondvej 2","Secondsecond",new Cityinfo(2,2323,"Secondby")));
-
+        personFacade.addPhoneToPerson(1,1);
+        personFacade.addHobbyToPerson(1,1);
 
         pf.create(p1);
         pf.create(p2);
@@ -33,7 +35,7 @@ public class Populator1 {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         IDataFacade mf = PersonFacade.getPersonFacade(emf);
-        mf.getAll().forEach(System.out::println);
+
     }
 }
 
