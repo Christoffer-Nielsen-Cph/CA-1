@@ -145,11 +145,11 @@ public class Person {
         if (this == o) return true;
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName()) && getAddress().equals(person.getAddress());
+        return getId() == person.getId() && getEmail().equals(person.getEmail()) && getFirstName().equals(person.getFirstName()) && getLastName().equals(person.getLastName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName(), getAddress());
+        return Objects.hash(getId(), getEmail(), getFirstName(), getLastName());
     }
 }
