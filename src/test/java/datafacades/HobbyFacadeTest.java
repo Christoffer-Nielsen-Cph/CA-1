@@ -74,7 +74,7 @@ public class HobbyFacadeTest {
         System.out.println("Testing getbyid(id)");
         Hobby expected = h1;
         Hobby actual = facade.getById(h1.getId());
-        assertEquals(expected.getDescription(), actual.getDescription());
+        assertEquals(expected, actual);
     }
     @Test
     void getAll() {
@@ -86,11 +86,18 @@ public class HobbyFacadeTest {
     @Test
     void update() throws EntityNotFoundException {
         System.out.println("Testing Update");
-        person2.setEmail("mynew@email.com");
-        h1.getPeople().remove(person2);
-        h1.getPeople().add(person2);
+        h1.setDescription("Pokemon club");
         Hobby expected = h1;
         Hobby actual = facade.update(h1);
         assertEquals(expected,actual);
+    }
+    @Test
+    void delete() throws EntityNotFoundException {
+        System.out.println("Testing delete(id)");
+        Hobby h = facade.delete(h1.getId());
+        int expected = 1;
+        int actual = facade.getAll().size();
+        assertEquals(expected, actual);
+        assertEquals(h,h1);
     }
 }

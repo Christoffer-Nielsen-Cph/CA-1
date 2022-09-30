@@ -76,7 +76,14 @@ public class HobbyFacade implements IDataFacade<Hobby> {
 
     @Override
     public Hobby delete(int id) throws EntityNotFoundException {
-        return null;
+        EntityManager em = getEntityManager();
+        Hobby h = em.find(Hobby.class, id);
+        if (h == null)
+            throw new EntityNotFoundException("Could not remove Person with id: "+id);
+        em.getTransaction().begin();
+        em.remove(h);
+        em.getTransaction().commit();
+        return h;
     }
 }
 

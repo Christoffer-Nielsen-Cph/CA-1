@@ -37,12 +37,12 @@ public class Hobby {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hobby hobby = (Hobby) o;
-        return id == hobby.id && Objects.equals(description, hobby.description) && Objects.equals(people, hobby.people);
+        return id == hobby.id && Objects.equals(description, hobby.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, people);
+        return Objects.hash(id, description);
     }
 
     public int getId() {
