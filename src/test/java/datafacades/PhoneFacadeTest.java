@@ -48,8 +48,8 @@ class PhoneFacadeTest {
             Person h2 = new Person("b@b.dk","Rikke","Jensen",a2);
 
 
-            p1 = new Phone(88888888, "Iphone",h1);
-            p2 = new Phone(2020, "Titanic",h2);
+            p1 = new Phone(88888888, "Iphone");
+            p2 = new Phone(2020, "Titanic");
 
             em.persist(p1);
             em.persist(p2);
@@ -71,7 +71,7 @@ class PhoneFacadeTest {
         Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
         Address a1 = new Address("Falkevej","Hubaba",cityinfo);
         Person pe = new Person("p@p.dk","Oliver","Jensen",a1);
-        Phone p = new Phone(2022,"Rock",pe);
+        Phone p = new Phone(2022,"Rock");
         p.setId(3);
         Phone expected = p;
         Phone actual   = facade.create(p);

@@ -28,6 +28,11 @@ public class Phone {
     public Phone() {
     }
 
+    public Phone(int number, String description) {
+        this.number = number;
+        this.description = description;
+    }
+
     public Phone(int number, String description, Person person) {
         this.number = number;
         this.description = description;

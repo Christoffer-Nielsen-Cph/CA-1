@@ -45,7 +45,7 @@ public class PhoneFacade implements IDataFacade<Phone> {
     @Override
     public Phone create(Phone p){
         EntityManager em = getEntityManager();
-        Phone phone = new Phone(p.getNumber(),p.getDescription(),p.getPerson());
+        Phone phone = new Phone(p.getNumber(),p.getDescription());
         try {
             em.getTransaction().begin();
             em.persist(phone);
