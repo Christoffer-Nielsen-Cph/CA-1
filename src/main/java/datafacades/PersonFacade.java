@@ -2,6 +2,7 @@ package datafacades;
 
 import entities.Address;
 import entities.Person;
+import entities.Phone;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -96,6 +97,7 @@ public class PersonFacade implements IDataFacade<Person> {
         em.getTransaction().commit();
         return p;
     }
+
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
