@@ -1,5 +1,6 @@
-/*package datafacades;
+package datafacades;
 
+import entities.Cityinfo;
 import entities.Movie;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
@@ -15,8 +16,7 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-/*
-public class CityInfoFacade implements IDataFacade<Movie> {
+public class CityInfoFacade implements IDataFacade<Cityinfo> {
 
     private static CityInfoFacade instance;
     private static EntityManagerFactory emf;
@@ -29,8 +29,8 @@ public class CityInfoFacade implements IDataFacade<Movie> {
      * 
      * @param _emf
      * @return an instance of this facade class.
-     /*
-    public static IDataFacade<Movie> getMovieFacade(EntityManagerFactory _emf) {
+     */
+    public static IDataFacade<Cityinfo> getCityInfoFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CityInfoFacade();
@@ -43,63 +43,36 @@ public class CityInfoFacade implements IDataFacade<Movie> {
     }
 
     @Override
-    public Movie create(Movie m){
-        EntityManager em = getEntityManager();
-        Movie movie = new Movie(m.getYear(),m.getTitle());
-        try {
-            em.getTransaction().begin();
-            em.persist(movie);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return movie;
+    public Cityinfo create(Cityinfo c){
+        return c;
     }
 
     @Override
-    public Movie getById(int id) throws EntityNotFoundException {
+    public Cityinfo getById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Movie m = em.find(Movie.class, id);
-        if (m == null)
-            throw new EntityNotFoundException("The Movie entity with ID: "+id+" Was not found");
-        return m;
+        Cityinfo c = em.find(Cityinfo.class, id);
+        if (c == null)
+            throw new EntityNotFoundException("The CityInfo entity with ID: "+id+" Was not found");
+        return c;
     }
 
     @Override
-    public List<Movie> getAll(){
+    public List<Cityinfo> getAll(){
         EntityManager em = getEntityManager();
-        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m", Movie.class);
-        List<Movie> movies = query.getResultList();
-        return movies;
+        TypedQuery<Cityinfo> query = em.createQuery("SELECT c FROM Cityinfo c", Cityinfo.class);
+        List<Cityinfo> cityinfos = query.getResultList();
+        return cityinfos;
     }
 
     @Override
-    public Movie update(Movie movie) throws EntityNotFoundException {
-        if (movie.getId() == 0)
-            throw new IllegalArgumentException("No Movie can be updated when id is missing");
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        Movie m = em.merge(movie);
-        em.getTransaction().commit();
-        return m;
+    public Cityinfo update(Cityinfo cityinfo) throws EntityNotFoundException {
+        return null;
     }
 
     @Override
-    public Movie delete(int id) throws EntityNotFoundException{
-        EntityManager em = getEntityManager();
-        Movie m = em.find(Movie.class, id);
-        if (m == null)
-            throw new EntityNotFoundException("Could not remove Movie with id: "+id);
-        em.getTransaction().begin();
-        em.remove(m);
-        em.getTransaction().commit();
-        return m;
+    public Cityinfo delete(int id) throws EntityNotFoundException {
+        return null;
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade fe = getMovieFacade(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
-    }
+
 }
-*/

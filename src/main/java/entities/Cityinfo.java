@@ -6,6 +6,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Cityinfo.deleteAllRows", query = "DELETE from Cityinfo"),
+        @NamedQuery(name = "Cityinfo.getAll", query = "SELECT c FROM Cityinfo c"),
+})
 @Table(name = "cityinfo")
 public class Cityinfo {
     @Id
@@ -27,6 +31,11 @@ public class Cityinfo {
     }
 
     public Cityinfo() {
+    }
+
+    public Cityinfo(int zipCode, String city) {
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
     public Cityinfo(int id, int zipCode, String city) {
