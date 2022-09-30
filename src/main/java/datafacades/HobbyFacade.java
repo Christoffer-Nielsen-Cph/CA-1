@@ -2,16 +2,18 @@ package datafacades;
 
 import entities.Hobby;
 import entities.Movie;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.eclipse.persistence.jpa.JpaHelper.getEntityManager;
 
-public class HobbyFacade implements IDataFacade {
+public class HobbyFacade implements IDataFacade<Hobby> {
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
 
@@ -25,19 +27,32 @@ public class HobbyFacade implements IDataFacade {
         }
         return instance;
     }
-
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
+
     @Override
-    public Object create(Object o) {
-        return null;
+    public Hobby create(Hobby h) {
+        EntityManager em = getEntityManager();
+        Hobby hobby = new Hobby(h.getDescription(), h.getPeople());
+        try {
+            em.getTransaction().begin();
+            em.persist(hobby);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return hobby;
     }
 
     @Override
-    public Object getById(int id) throws EntityNotFoundException {
-        return null;
+    public Hobby getById(int id) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+         Hobby h = em.find(Hobby.class, id);
+        if (h == null)
+            throw new EntityNotFoundException("The hobby entity with ID: "+id+" Was not found");
+        return h;
     }
 
     @Override
@@ -49,13 +64,26 @@ public class HobbyFacade implements IDataFacade {
     }
 
     @Override
-    public Object update(Object o) throws EntityNotFoundException {
-        return null;
+    public Hobby update(Hobby h) throws EntityNotFoundException {
+        if (h.getId() == 0)
+            throw new IllegalArgumentException("No hobby can be updated when id is missing");
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        Hobby hobby = em.merge(h);
+        em.getTransaction().commit();
+        return hobby;
     }
 
     @Override
-    public Object delete(int id) throws EntityNotFoundException {
-        return null;
+    public Hobby delete(int id) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        Hobby h = em.find(Hobby.class, id);
+        if (h == null)
+            throw new EntityNotFoundException("Could not remove Person with id: "+id);
+        em.getTransaction().begin();
+        em.remove(h);
+        em.getTransaction().commit();
+        return h;
     }
 }
 
