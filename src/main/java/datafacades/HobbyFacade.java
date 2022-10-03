@@ -21,6 +21,11 @@ public class HobbyFacade implements IDataFacade<Hobby> {
     //Private Constructor to ensure Singleton
     private HobbyFacade() {}
 
+    /**
+     *
+     * @param _emf
+     * @return an instance of this facade class.
+     */
     public static IDataFacade<Hobby> getHobbyFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
