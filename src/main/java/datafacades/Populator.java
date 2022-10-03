@@ -25,7 +25,8 @@ public class Populator {
         Person p2 = new Person("second@second.com","Second","Secondsen",new Address("Secondvej 2","Secondsecond",new Cityinfo(2,2323,"Secondby")));
 
 
-
+        pf.create(p1);
+        pf.create(p2);
 
         personFacade.addHobbyToPerson(1,5);
         personFacade.addPhoneToPerson(1,5);
