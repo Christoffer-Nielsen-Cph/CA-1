@@ -26,7 +26,7 @@ public class ApplicationConfig extends Application {
         resources.add(errorhandling.GenericExceptionMapper.class);
         resources.add(org.glassfish.jersey.jsonb.internal.JsonBindingProvider.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
-        resources.add(rest.MovieResource.class);
+
         resources.add(rest.PersonResource.class);
         resources.add(rest.HobbyResource.class);
         resources.add(rest.PhoneResource.class);
