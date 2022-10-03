@@ -1,11 +1,12 @@
 package dtos;
 
 
+import entities.Address;
+import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PersonDTO {
@@ -13,6 +14,9 @@ public class PersonDTO {
     private String email;
     private String firstName;
     private String lastName;
+    private Address address;
+    private Set<Phone> phones = new LinkedHashSet<>();
+    private Set<Hobby> hobbies = new LinkedHashSet<>();
 
 
 
@@ -23,6 +27,7 @@ public class PersonDTO {
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
+
     }
 
     public static List<PersonDTO> toList(List<Person> persons) {
@@ -31,7 +36,7 @@ public class PersonDTO {
 
 
     public Person getEntity(){
-        Person p = new Person(this.email,this.firstName, this.lastName);
+        Person p = new Person(this.email,this.firstName, this.lastName, this.address, this.hobbies, this.phones);
         if(person_Id != 0)
             p.setId(this.person_Id);
 
