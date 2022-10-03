@@ -106,7 +106,7 @@ public class PersonFacade implements IDataFacade<Person> {
         Phone phone = em.find(Phone.class, phoneID);
         Person person = em.find(Person.class, personID);
         em.getTransaction().begin();
-            person.addPhone(phone);
+            phone.setPerson(person);
         em.getTransaction().commit();
         em.close();
         return person;

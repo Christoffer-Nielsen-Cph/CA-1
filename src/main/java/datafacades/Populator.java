@@ -7,7 +7,7 @@ package datafacades;
 
 import javax.persistence.EntityManagerFactory;
 
-import entities.Movie;
+import entities.*;
 import utils.EMF_Creator;
 
 /**
@@ -17,20 +17,26 @@ import utils.EMF_Creator;
 public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade pf = MovieFacade.getMovieFacade(emf);
-        Movie m1 = new Movie(2022,"Top Gun");
-        Movie m2 = new Movie(2005,"Terminator");
+        IDataFacade <Person> pf = PersonFacade.getPersonFacade(emf);
+        PersonFacade personFacade = (PersonFacade) PersonFacade.getPersonFacade(emf);
+        IDataFacade <Hobby> hobby = HobbyFacade.getHobbyFacade(emf);
+        IDataFacade <Phone> phone = PhoneFacade.getPhoneFacade(emf);
+        Person p1 = new Person("test@test.com","Test","Testesen",new Address("Testvej 1","Testtest",new Cityinfo(1,2323,"Testby")));
+        Person p2 = new Person("second@second.com","Second","Secondsen",new Address("Secondvej 2","Secondsecond",new Cityinfo(2,2323,"Secondby")));
 
 
-        pf.create(m1);
-        pf.create(m2);
+
+
+        personFacade.addHobbyToPerson(1,5);
+        personFacade.addPhoneToPerson(1,5);
 
     }
-    
+
     public static void main(String[] args) {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade mf = MovieFacade.getMovieFacade(emf);
-        mf.getAll().forEach(System.out::println);
+        IDataFacade mf = PersonFacade.getPersonFacade(emf);
+
     }
 }
+
