@@ -1,20 +1,17 @@
 package datafacades;
 
+import dtos.HobbyDTO;
+import dtos.PersonDTO;
 import entities.Hobby;
-import entities.Movie;
 import entities.Person;
-import entities.Phone;
 import errorhandling.EntityNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.eclipse.persistence.jpa.JpaHelper.getEntityManager;
-
-public class HobbyFacade implements IDataFacade<Hobby> {
+public class HobbyFacade{
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
 
@@ -26,7 +23,7 @@ public class HobbyFacade implements IDataFacade<Hobby> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Hobby> getHobbyFacade(EntityManagerFactory _emf) {
+    public static HobbyFacade getHobbyFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new HobbyFacade();
@@ -38,10 +35,10 @@ public class HobbyFacade implements IDataFacade<Hobby> {
     }
 
 
-    @Override
-    public Hobby create(Hobby h) {
+    public Hobby create(Hobby hobby) {
+
         EntityManager em = getEntityManager();
-        Hobby hobby = new Hobby(h.getDescription(), h.getPeople());
+
         try {
             em.getTransaction().begin();
             em.persist(hobby);
@@ -52,24 +49,36 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         return hobby;
     }
 
-    @Override
-    public Hobby getById(int id) throws EntityNotFoundException {
+    public HobbyDTO getHobbyById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-         Hobby h = em.find(Hobby.class, id);
-        if (h == null)
-            throw new EntityNotFoundException("The hobby entity with ID: "+id+" Was not found");
-        return h;
+        try{
+
+            TypedQuery findHobby = em.createQuery("SELECT h FROM Hobby h WHERE h.id =:hobby_id",Hobby.class);
+            findHobby.setParameter("hobby_id",id);
+            Hobby hobbyFound = (Hobby) findHobby.getSingleResult();
+            return new HobbyDTO(hobbyFound);
+
+        } finally {
+            em.close();
+        }
     }
 
-    @Override
-    public List<Hobby> getAll() {
+
+    public List<HobbyDTO> getAll() {
         EntityManager em = getEntityManager();
-        TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
-        List<Hobby> HobbyList = query.getResultList();
-        return HobbyList;
+
+        try{
+
+            TypedQuery findAll = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+            List<Hobby> hobbies = findAll.getResultList();
+            return HobbyDTO.getDTOs(hobbies);
+
+        }finally {
+            em.close();
+        }
     }
 
-    @Override
+
     public Hobby update(Hobby h) throws EntityNotFoundException {
         if (h.getId() == 0)
             throw new IllegalArgumentException("No hobby can be updated when id is missing");
@@ -80,26 +89,17 @@ public class HobbyFacade implements IDataFacade<Hobby> {
         return hobby;
     }
 
-    @Override
+
     public Hobby delete(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         Hobby h = em.find(Hobby.class, id);
         if (h == null)
-            throw new EntityNotFoundException("Could not remove Person with id: "+id);
+            throw new EntityNotFoundException("Could not remove hobby with id: "+id);
         em.getTransaction().begin();
         em.remove(h);
         em.getTransaction().commit();
         return h;
     }
-    public Hobby addHobbyToPerson(int hobbyID, int personID){
-        EntityManager em = emf.createEntityManager();
-        Hobby hobby = em.find(Hobby.class, hobbyID);
-        Person person = em.find(Person.class, personID);
-        em.getTransaction().begin();
-        person.addHobby(hobby);
-        em.getTransaction().commit();
-        em.close();
-        return hobby;
-    }
+
 }
 

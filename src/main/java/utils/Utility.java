@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 import java.util.Properties;
 import java.util.Set;
 import com.google.gson.*;
-import dtos.MovieDTO;
+import dtos.PersonDTO;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- *
- * @author tha
- */
 public class Utility {
     private static Gson gson = new GsonBuilder().create();
     
@@ -29,12 +20,12 @@ public class Utility {
             }
     }
     
-    public static MovieDTO json2DTO(String json) throws UnsupportedEncodingException{
-            return gson.fromJson(new String(json.getBytes("UTF8")), MovieDTO.class);
+    public static PersonDTO json2DTO(String json) throws UnsupportedEncodingException{
+            return gson.fromJson(new String(json.getBytes("UTF8")), PersonDTO.class);
     }
     
-    public static String DTO2json(MovieDTO movieDTO){
-        return gson.toJson(movieDTO, MovieDTO.class);
+    public static String DTO2json(PersonDTO personDTO){
+        return gson.toJson(personDTO, PersonDTO.class);
     }
     
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -42,11 +33,12 @@ public class Utility {
         
         //Test json2DTO and back again
         String str2 = "{'id':1, 'str1':'Dette er den første tekst', 'str2':'Her er den ANDEN'}";
-        MovieDTO movieDTO = json2DTO(str2);
-        System.out.println(movieDTO);
+        PersonDTO personDTO = json2DTO(str2);
+        System.out.println(personDTO);
         
-        String backAgain = DTO2json(movieDTO);
+        String backAgain = DTO2json(personDTO);
         System.out.println(backAgain);
     }
 
 }
+

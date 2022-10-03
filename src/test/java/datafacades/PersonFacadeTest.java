@@ -1,5 +1,6 @@
 package datafacades;
 
+import dtos.PersonDTO;
 import entities.Address;
 import entities.Cityinfo;
 import entities.Person;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static IDataFacade<Person> facade;
+    private static PersonFacade facade;
 
     Person p1,p2;
 
@@ -77,16 +78,17 @@ class PersonFacadeTest {
     @Test
     void getById() throws EntityNotFoundException {
         System.out.println("Testing getbyid(id)");
-        Person expected = p1;
-        Person actual = facade.getById(p1.getId());
-        assertEquals(expected, actual);
+        String expected =p1.getEmail();
+        PersonDTO actual = facade.getPersonById(p1.getId());
+        String actualEmail = actual.getEmail();
+        assertEquals(expected, actualEmail);
     }
 
     @Test
     void getAll() {
         System.out.println("Testing getAll()");
         int expected = 2;
-        int actual = facade.getAll().size();
+        int actual = facade.getAllPeople().size();
         assertEquals(expected,actual);
     }
 
@@ -105,9 +107,11 @@ class PersonFacadeTest {
         System.out.println("Testing delete(id)");
         Person p = facade.delete(p1.getId());
         int expected = 1;
-        int actual = facade.getAll().size();
+        int actual = facade.getAllPeople().size();
         assertEquals(expected, actual);
         assertEquals(p,p1);
     }
 }
+
+
 

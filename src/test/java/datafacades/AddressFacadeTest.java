@@ -1,9 +1,8 @@
 package datafacades;
 
+import dtos.AddressDTO;
 import entities.Address;
 import entities.Cityinfo;
-import entities.Movie;
-import entities.Person;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -14,10 +13,10 @@ import javax.persistence.EntityManagerFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class AddressFacadeTest {
+public class AddressFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static IDataFacade<Address> facade;
+    private static AddressFacade facade;
 
     Address a1,a2;
 
@@ -75,8 +74,10 @@ class AddressFacadeTest {
     void getById() throws EntityNotFoundException {
         System.out.println("Testing getbyid(id)");
         Address expected = a1;
-        Address actual = facade.getById(a1.getId());
-        assertEquals(expected, actual);
+        int expectedId = a1.getId();
+        AddressDTO actual = facade.getAddressById(a1.getId());
+        int actualId = actual.getId();
+        assertEquals(expectedId, actualId);
     }
 
     @Test
@@ -108,3 +109,4 @@ class AddressFacadeTest {
     }
 
 }
+

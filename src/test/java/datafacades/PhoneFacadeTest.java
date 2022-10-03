@@ -1,5 +1,6 @@
 package datafacades;
 
+import dtos.PhoneDTO;
 import entities.*;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PhoneFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static IDataFacade<Phone> facade;
+    private static PhoneFacade facade;
 
     Phone p1,p2;
 
@@ -41,13 +42,6 @@ class PhoneFacadeTest {
             em.getTransaction().begin();
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
 
-            Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
-            Address a1 = new Address("Falkevej","blabla", cityinfo);
-            Address a2 = new Address("Birkevej","hubla",cityinfo);
-            Person h1 = new Person("h@h.dk","Claus","Jensen",a1);
-            Person h2 = new Person("b@b.dk","Rikke","Jensen",a2);
-
-
             p1 = new Phone(88888888, "Iphone");
             p2 = new Phone(2020, "Titanic");
 
@@ -68,9 +62,7 @@ class PhoneFacadeTest {
     @Test
     void create() {
         System.out.println("Testing create(Phone p)");
-        Cityinfo cityinfo = new Cityinfo(1,9550,"Mariager");
-        Address a1 = new Address("Falkevej","Hubaba",cityinfo);
-        Person pe = new Person("p@p.dk","Oliver","Jensen",a1);
+
         Phone p = new Phone(2022,"Rock");
         p.setId(3);
         Phone expected = p;
@@ -82,16 +74,17 @@ class PhoneFacadeTest {
     @Test
     void getById() throws EntityNotFoundException {
         System.out.println("Testing getbyid(id)");
-        Phone expected = p1;
-        Phone actual = facade.getById(p1.getId());
-        assertEquals(expected, actual);
+        int phoneNumberExpected = p1.getNumber();
+        PhoneDTO actual = facade.getPhoneById(p1.getId());
+        int phoneNumberActual = actual.getNumber();
+        assertEquals(phoneNumberExpected, phoneNumberActual);
     }
 
     @Test
     void getAll() {
         System.out.println("Testing getAll()");
         int expected = 2;
-        int actual = facade.getAll().size();
+        int actual = facade.getAllPhones().size();
         assertEquals(expected,actual);
     }
 
@@ -110,8 +103,9 @@ class PhoneFacadeTest {
         System.out.println("Testing delete(id)");
         Phone p = facade.delete(p1.getId());
         int expected = 1;
-        int actual = facade.getAll().size();
+        int actual = facade.getAllPhones().size();
         assertEquals(expected, actual);
         assertEquals(p,p1);
     }
 }
+

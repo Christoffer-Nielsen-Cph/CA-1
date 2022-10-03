@@ -1,5 +1,6 @@
 package datafacades;
 
+import dtos.PersonDTO;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
@@ -20,7 +21,7 @@ import java.util.Set;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class PersonFacade implements IDataFacade<Person> {
+public class PersonFacade  {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
@@ -34,7 +35,7 @@ public class PersonFacade implements IDataFacade<Person> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Person> getPersonFacade(EntityManagerFactory _emf) {
+    public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new PersonFacade();
@@ -46,14 +47,17 @@ public class PersonFacade implements IDataFacade<Person> {
         return emf.createEntityManager();
     }
 
-    @Override
-    public Person create(Person p){
+
+    public Person create(Person person){
+
         EntityManager em = getEntityManager();
-        Person person = new Person(p.getEmail(),p.getFirstName(),p.getLastName(),p.getAddress());
+
         try {
+
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
+
         } finally {
             em.close();
         }
@@ -61,24 +65,41 @@ public class PersonFacade implements IDataFacade<Person> {
     }
 
 
-    @Override
-    public Person getById(int id) throws EntityNotFoundException {
+
+    public PersonDTO getPersonById(int id) throws EntityNotFoundException {
+
         EntityManager em = getEntityManager();
-        Person p = em.find(Person.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("The Person entity with ID: "+id+" Was not found");
-        return p;
+
+        try{
+
+            TypedQuery findPerson = em.createQuery("SELECT p FROM Person p WHERE p.id =:person_id",Person.class);
+            findPerson.setParameter("person_id",id);
+            Person personFound = (Person) findPerson.getSingleResult();
+            return new PersonDTO(personFound);
+
+        } finally {
+            em.close();
+        }
     }
 
-    @Override
-    public List<Person> getAll(){
+
+    public List<PersonDTO> getAllPeople(){
+
         EntityManager em = getEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> person = query.getResultList();
-        return person;
+
+        try{
+
+            TypedQuery findAll = em.createQuery("SELECT p FROM Person p", Person.class);
+            List<Person> people = findAll.getResultList();
+            return PersonDTO.getDTOs(people);
+
+        }finally {
+            em.close();
+        }
+
     }
 
-    @Override
+
     public Person update(Person person) throws EntityNotFoundException {
         if (person.getId() == 0)
             throw new IllegalArgumentException("No Person can be updated when id is missing");
@@ -89,7 +110,7 @@ public class PersonFacade implements IDataFacade<Person> {
         return p;
     }
 
-    @Override
+
     public Person delete(int id) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
         Person p = em.find(Person.class, id);
@@ -122,20 +143,5 @@ public class PersonFacade implements IDataFacade<Person> {
         return person;
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade fe = getPersonFacade(emf);
-
-
-       /* Address address = new Address("Mariager","9550");
-        Set<Phone> phones = new HashSet<>();
-        Phone phone = new Phone(888888,"Iphone");
-        Set<Hobby> hobbies = new HashSet<>();
-        phones.add(phone);
-        Person person = new Person("a@a.dk","Oliver","Jensen",address,hobbies,phones);
-
-        System.out.println(person);
-        */
-    }
 }
 

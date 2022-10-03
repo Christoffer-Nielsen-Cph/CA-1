@@ -27,6 +27,10 @@ public class Hobby {
     private Set<Person> people = new LinkedHashSet<>();
     public Hobby(){}
 
+    public Hobby(String description) {
+        this.description = description;
+    }
+
     public Hobby(String description, Set<Person> people) {
         this.description = description;
         this.people = people;

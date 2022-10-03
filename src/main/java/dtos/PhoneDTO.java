@@ -1,54 +1,110 @@
 package dtos;
 
-import entities.Movie;
 import entities.Person;
 import entities.Phone;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
-public class PhoneDTO {
-    private int id;
-    private int number;
-    private String description;
-    private Person person;
+public class PhoneDTO implements Serializable {
+    private final int id;
+    private final int number;
+    private final String description;
+    private final PersonInnerDTO person;
+
+    public PhoneDTO(int id, int number, String description, PersonInnerDTO person) {
+        this.id = id;
+        this.number = number;
+        this.description = description;
+        this.person = person;
+    }
 
     public PhoneDTO(Phone phone) {
-        if(phone.getId()!=0)
-            this.id = phone.getId();
+        this.id = phone.getId();
         this.number = phone.getNumber();
         this.description = phone.getDescription();
+        this.person = new PersonInnerDTO(phone.getPerson());
+
+
+    }
+    public static List<PhoneDTO> getDTOs(List<Phone> phones){
+        List<PhoneDTO> phoneDTOList = new ArrayList<>();
+        phones.forEach(phone -> {
+            phoneDTOList.add(new PhoneDTO(phone));
+        });
+        return phoneDTOList;
+
     }
 
-    public static List<PhoneDTO> toList(List<Phone> phones) {
-        return phones.stream().map(PhoneDTO::new).collect(Collectors.toList());
+    public int getId() {
+        return id;
     }
 
-
-    public Phone getEntity(){
-        Phone p = new Phone(this.number, this.description, this.person);
-        if(id != 0)
-            p.setId(this.id);
-
-        return p;
+    public int getNumber() {
+        return number;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getDescription() {
+        return description;
+    }
+
+    public PersonInnerDTO getPerson() {
+        return person;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhoneDTO)) return false;
-        PhoneDTO phoneDTO = (PhoneDTO) o;
-        return id == phoneDTO.id && number == phoneDTO.number && description.equals(phoneDTO.description) && person.equals(phoneDTO.person);
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "number = " + number + ", " +
+                "description = " + description + ", " +
+                "person = " + person + ")";
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, number, description, person);
+    public static class PersonInnerDTO implements Serializable {
+        private final int id;
+        private final String email;
+        private final String firstName;
+        private final String lastName;
+
+        public PersonInnerDTO(int id, String email, String firstName, String lastName) {
+            this.id = id;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public PersonInnerDTO(Person person) {
+            this.id = person.getId();
+            this.email = person.getEmail();
+            this.firstName = person.getFirstName();
+            this.lastName = person.getLastName();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "email = " + email + ", " +
+                    "firstName = " + firstName + ", " +
+                    "lastName = " + lastName + ")";
+        }
     }
 }

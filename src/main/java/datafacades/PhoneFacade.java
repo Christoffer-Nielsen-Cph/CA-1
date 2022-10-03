@@ -1,6 +1,8 @@
 package datafacades;
 
-import entities.Movie;
+import dtos.PersonDTO;
+import dtos.PhoneDTO;
+import entities.Person;
 import entities.Phone;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
@@ -16,7 +18,7 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class PhoneFacade implements IDataFacade<Phone> {
+public class PhoneFacade {
 
     private static PhoneFacade instance;
     private static EntityManagerFactory emf;
@@ -30,7 +32,7 @@ public class PhoneFacade implements IDataFacade<Phone> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Phone> getPhoneFacade(EntityManagerFactory _emf) {
+    public static PhoneFacade getPhoneFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new PhoneFacade();
@@ -42,10 +44,10 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return emf.createEntityManager();
     }
 
-    @Override
-    public Phone create(Phone p){
+
+    public Phone create(Phone phone){
         EntityManager em = getEntityManager();
-        Phone phone = new Phone(p.getNumber(),p.getDescription());
+
         try {
             em.getTransaction().begin();
             em.persist(phone);
@@ -56,24 +58,37 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return phone;
     }
 
-    @Override
-    public Phone getById(int id) throws EntityNotFoundException {
+
+    public PhoneDTO getPhoneById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Phone p = em.find(Phone.class, id);
-        if (p == null)
-            throw new EntityNotFoundException("The Phone entity with ID: "+id+" Was not found");
-        return p;
+        try{
+
+            TypedQuery findPhone = em.createQuery("SELECT p FROM Phone p WHERE p.id =:phone_id", Phone.class);
+            findPhone.setParameter("phone_id",id);
+            Phone phoneFound = (Phone) findPhone.getSingleResult();
+            return new PhoneDTO(phoneFound);
+
+        } finally {
+            em.close();
+        }
     }
 
-    @Override
-    public List<Phone> getAll(){
+
+    public List<PhoneDTO> getAllPhones(){
         EntityManager em = getEntityManager();
-        TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
-        List<Phone> phones = query.getResultList();
-        return phones;
+
+        try{
+
+            TypedQuery findAll = em.createQuery("SELECT p FROM Phone p", Phone.class);
+            List<Phone> phones = findAll.getResultList();
+            return PhoneDTO.getDTOs(phones);
+
+        }finally {
+            em.close();
+        }
     }
 
-    @Override
+
     public Phone update(Phone phone) throws EntityNotFoundException {
         if (phone.getId() == 0)
             throw new IllegalArgumentException("No Phone can be updated when id is missing");
@@ -84,7 +99,7 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return p;
     }
 
-    @Override
+
     public Phone delete(int id) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
         Phone p = em.find(Phone.class, id);
@@ -96,9 +111,4 @@ public class PhoneFacade implements IDataFacade<Phone> {
         return p;
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade fe = getPhoneFacade(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
-    }
 }

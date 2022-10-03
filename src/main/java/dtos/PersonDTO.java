@@ -1,65 +1,207 @@
 package dtos;
 
-
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.List;
 
-public class PersonDTO {
-    private int person_Id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private Address address;
-    private Set<Phone> phones = new LinkedHashSet<>();
-    private Set<Hobby> hobbies = new LinkedHashSet<>();
+public class PersonDTO implements Serializable {
+    private final int id;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private AddressInnerDTO address;
+    private final List<HobbyInnerDTO> hobbies = new ArrayList<>();
+    private final List<PhoneInnerDTO> phones = new ArrayList<>();
 
 
+    public PersonDTO(int id, String email, String firstName, String lastName, AddressInnerDTO address) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
 
+    public PersonDTO(int id, String email, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public PersonDTO(Person person) {
-        if(person.getId()!=0)
-            this.person_Id = person.getId();
+        this.id = person.getId();
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
+        this.address = new AddressInnerDTO(person.getAddress());
+        person.getHobbies().forEach(hobby -> {
+            hobbies.add(new HobbyInnerDTO(hobby));
+        });
+        person.getPhones().forEach(phone -> {
+            phones.add(new PhoneInnerDTO(phone));
+        });
+    }
+
+    public static List<PersonDTO> getDTOs(List<Person> people){
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        people.forEach(person -> {
+            personDTOList.add(new PersonDTO(person));
+        });
+        return personDTOList;
 
     }
 
-    public static List<PersonDTO> toList(List<Person> persons) {
-        return persons.stream().map(PersonDTO::new).collect(Collectors.toList());
+
+    public int getId() {
+        return id;
     }
 
-
-    public Person getEntity(){
-        Person p = new Person(this.email,this.firstName, this.lastName, this.address, this.hobbies, this.phones);
-        if(person_Id != 0)
-            p.setId(this.person_Id);
-
-        return p;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPerson_Id(int person_Id) {
-        this.person_Id = person_Id;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public AddressInnerDTO getAddress() {
+        return address;
+    }
+
+    public List<HobbyInnerDTO> getHobbies() {
+        return hobbies;
+    }
+
+    public List<PhoneInnerDTO> getPhones() {
+        return phones;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PersonDTO personDTO = (PersonDTO) o;
-        return person_Id == personDTO.person_Id && email.equals(personDTO.email) && firstName.equals(personDTO.firstName) && lastName.equals(personDTO.lastName);
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "email = " + email + ", " +
+                "firstName = " + firstName + ", " +
+                "lastName = " + lastName + ", " +
+                "address = " + address + ", " +
+                "hobbies = " + hobbies + ", " +
+                "phones = " + phones + ")";
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(person_Id, email, firstName, lastName);
+    public static class AddressInnerDTO implements Serializable {
+        private final int id;
+        private final String address;
+        private final String additionalInfo;
+
+        public AddressInnerDTO(int id, String address, String additionalInfo) {
+            this.id = id;
+            this.address = address;
+            this.additionalInfo = additionalInfo;
+        }
+
+        public AddressInnerDTO(Address address) {
+            this.id = address.getId();
+            this.address = address.getAddress();
+            this.additionalInfo = address.getAdditionalInfo();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public String getAdditionalInfo() {
+            return additionalInfo;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "address = " + address + ", " +
+                    "additionalInfo = " + additionalInfo + ")";
+        }
     }
 
+    public static class HobbyInnerDTO implements Serializable {
+        private final int id;
+        private final String description;
 
+        public HobbyInnerDTO(int id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+
+        public HobbyInnerDTO(Hobby hobby) {
+            this.id = hobby.getId();
+            this.description = hobby.getDescription();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "description = " + description + ")";
+        }
+    }
+
+    public static class PhoneInnerDTO implements Serializable {
+        private final int id;
+        private final int number;
+        private final String description;
+
+        public PhoneInnerDTO(int id, int number, String description) {
+            this.id = id;
+            this.number = number;
+            this.description = description;
+        }
+
+        public PhoneInnerDTO(Phone phone) {
+            this.id = phone.getId();
+            this.number = phone.getNumber();
+            this.description = phone.getDescription();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "number = " + number + ", " +
+                    "description = " + description + ")";
+        }
+    }
 }
-

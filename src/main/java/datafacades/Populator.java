@@ -8,6 +8,7 @@ package datafacades;
 import javax.persistence.EntityManagerFactory;
 
 import entities.*;
+import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
 /**
@@ -15,28 +16,30 @@ import utils.EMF_Creator;
  * @author tha
  */
 public class Populator {
-    public static void populate(){
+    public static void populate() throws EntityNotFoundException {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade <Person> pf = PersonFacade.getPersonFacade(emf);
-        PersonFacade personFacade = (PersonFacade) PersonFacade.getPersonFacade(emf);
-        IDataFacade <Hobby> hobby = HobbyFacade.getHobbyFacade(emf);
-        IDataFacade <Phone> phone = PhoneFacade.getPhoneFacade(emf);
+        PersonFacade pf = PersonFacade.getPersonFacade(emf);
+        HobbyFacade hf = HobbyFacade.getHobbyFacade(emf);
         Person p1 = new Person("test@test.com","Test","Testesen",new Address("Testvej 1","Testtest",new Cityinfo(1,2323,"Testby")));
         Person p2 = new Person("second@second.com","Second","Secondsen",new Address("Secondvej 2","Secondsecond",new Cityinfo(2,2323,"Secondby")));
+        Hobby h1 = new Hobby("Fishing");
+
+       // pf.create(p1);
+       // pf.create(p2);
+       // pf.addHobbyToPerson(1,1);
+       // pf.addPhoneToPerson(1,1);
 
 
-        pf.create(p1);
-        pf.create(p2);
 
-        personFacade.addHobbyToPerson(1,5);
-        personFacade.addPhoneToPerson(1,5);
+
+
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws EntityNotFoundException {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade mf = PersonFacade.getPersonFacade(emf);
+
 
     }
 }

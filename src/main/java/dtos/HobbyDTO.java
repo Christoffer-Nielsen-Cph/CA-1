@@ -1,53 +1,102 @@
 package dtos;
 
 import entities.Hobby;
-import entities.Hobby;
 import entities.Person;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-public class HobbyDTO {
-    private int id;
-    private String desciption;
-    private Set<Person> people;
+public class HobbyDTO implements Serializable {
+    private final int id;
+    private final String description;
+    private List<PersonInnerDTO> people = new ArrayList<>();
 
-    public HobbyDTO(Hobby Hobby) {
-        if(Hobby.getId()!=0)
-            this.id = Hobby.getId();
-            this.desciption = Hobby.getDescription();
-    }
-
-    public static List<HobbyDTO> toList(List<Hobby> Hobbys) {
-        return Hobbys.stream().map(HobbyDTO::new).collect(Collectors.toList());
-    }
-
-
-    public Hobby getEntity(){
-        Hobby m = new Hobby(this.desciption,this.people);
-        if(id != 0)
-            m.setId(this.id);
-
-        return m;
-    }
-
-    public void setId(int id) {
+    public HobbyDTO(int id, String description, List<PersonInnerDTO> people) {
         this.id = id;
+        this.description = description;
+        this.people = people;
+    }
+
+    public HobbyDTO(Hobby hobby) {
+        this.id = hobby.getId();
+        this.description = hobby.getDescription();
+        hobby.getPeople().forEach(person -> {
+            people.add(new PersonInnerDTO(person));
+        });
+    }
+    public static List<HobbyDTO> getDTOs(List<Hobby> hobbies){
+        List<HobbyDTO> hobbyDTOList = new ArrayList<>();
+        hobbies.forEach(hobby -> {
+            hobbyDTOList.add(new HobbyDTO(hobby));
+        });
+        return hobbyDTOList;
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<PersonInnerDTO> getPeople() {
+        return people;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HobbyDTO hobbyDTO = (HobbyDTO) o;
-        return id == hobbyDTO.id && desciption.equals(hobbyDTO.desciption) && people.equals(hobbyDTO.people);
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "description = " + description + ", " +
+                "people = " + people + ")";
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, desciption, people);
+    public static class PersonInnerDTO implements Serializable {
+        private final int id;
+        private final String email;
+        private final String firstName;
+        private final String lastName;
+
+        public PersonInnerDTO(int id, String email, String firstName, String lastName) {
+            this.id = id;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public PersonInnerDTO(Person person) {
+            this.id = person.getId();
+            this.email = person.getEmail();
+            this.firstName = person.getFirstName();
+            this.lastName = person.getLastName();
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "email = " + email + ", " +
+                    "firstName = " + firstName + ", " +
+                    "lastName = " + lastName + ")";
+        }
     }
 }

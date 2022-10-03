@@ -1,4 +1,5 @@
 package datafacades;
+import dtos.HobbyDTO;
 import entities.*;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HobbyFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static IDataFacade<Hobby> facade;
+    private static HobbyFacade facade;
     Person person1, person2, person3, person4;
     Hobby h1,h2;
 
@@ -73,8 +74,10 @@ public class HobbyFacadeTest {
     void getById() throws EntityNotFoundException {
         System.out.println("Testing getbyid(id)");
         Hobby expected = h1;
-        Hobby actual = facade.getById(h1.getId());
-        assertEquals(expected, actual);
+        String hobbyDescExpected = h1.getDescription();
+        HobbyDTO actual = facade.getHobbyById(h1.getId());
+        String hobbyDescActual = actual.getDescription();
+        assertEquals(hobbyDescExpected, hobbyDescActual);
     }
     @Test
     void getAll() {
@@ -101,3 +104,5 @@ public class HobbyFacadeTest {
         assertEquals(h,h1);
     }
 }
+
+

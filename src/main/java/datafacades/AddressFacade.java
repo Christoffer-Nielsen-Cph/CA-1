@@ -1,7 +1,9 @@
 package datafacades;
 
+import dtos.AddressDTO;
+import dtos.PersonDTO;
 import entities.Address;
-import entities.Movie;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -16,7 +18,7 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class AddressFacade implements IDataFacade<Address> {
+public class AddressFacade {
 
     private static AddressFacade instance;
     private static EntityManagerFactory emf;
@@ -30,7 +32,7 @@ public class AddressFacade implements IDataFacade<Address> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Address> getAddressFacade(EntityManagerFactory _emf) {
+    public static AddressFacade getAddressFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new AddressFacade();
@@ -42,10 +44,11 @@ public class AddressFacade implements IDataFacade<Address> {
         return emf.createEntityManager();
     }
 
-    @Override
-    public Address create(Address a){
+
+    public Address create(Address address){
+
         EntityManager em = getEntityManager();
-        Address address = new Address(a.getAddress(),a.getAdditionalInfo(),a.getCityinfo(),a.getPeople());
+
         try {
             em.getTransaction().begin();
             em.persist(address);
@@ -56,24 +59,38 @@ public class AddressFacade implements IDataFacade<Address> {
         return address;
     }
 
-    @Override
-    public Address getById(int id) throws EntityNotFoundException {
+
+    public AddressDTO getAddressById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Address a = em.find(Address.class, id);
-        if (a == null)
-            throw new EntityNotFoundException("The Address entity with ID: "+id+" Was not found");
-        return a;
+
+        try{
+
+            TypedQuery findAddress = em.createQuery("SELECT a FROM Address a WHERE a.id =:address_id", Address.class);
+            findAddress.setParameter("address_id",id);
+            Address addressFound = (Address) findAddress.getSingleResult();
+            return new AddressDTO(addressFound);
+
+        } finally {
+            em.close();
+        }
     }
 
-    @Override
-    public List<Address> getAll(){
+
+    public List<AddressDTO> getAll(){
         EntityManager em = getEntityManager();
-        TypedQuery<Address> query = em.createQuery("SELECT a FROM Address a", Address.class);
-        List<Address> addresses = query.getResultList();
-        return addresses;
+
+        try{
+
+            TypedQuery findAll = em.createQuery("SELECT a FROM Address a", Address.class);
+            List<Address> addresses = findAll.getResultList();
+            return AddressDTO.getDTOs(addresses);
+
+        }finally {
+            em.close();
+        }
     }
 
-    @Override
+
     public Address update(Address address) throws EntityNotFoundException {
         if (address.getId() == 0)
             throw new IllegalArgumentException("No Address can be updated when id is missing");
@@ -84,7 +101,7 @@ public class AddressFacade implements IDataFacade<Address> {
         return a;
     }
 
-    @Override
+
     public Address delete(int id) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
         Address a = em.find(Address.class, id);
@@ -96,9 +113,4 @@ public class AddressFacade implements IDataFacade<Address> {
         return a;
     }
 
-    public static void main(String[] args) {
-        emf = EMF_Creator.createEntityManagerFactory();
-        IDataFacade af = getAddressFacade(emf);
-        af.getAll().forEach(dto->System.out.println(dto));
-    }
 }

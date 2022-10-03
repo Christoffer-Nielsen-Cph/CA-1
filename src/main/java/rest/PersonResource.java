@@ -1,15 +1,15 @@
 package rest;
 
-import businessfacades.MovieDTOFacade;
-import businessfacades.PersonDTOFacade;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.IDataFacade;
-import dtos.MovieDTO;
+import datafacades.PersonFacade;
 import dtos.PersonDTO;
-import entities.Person;
 import errorhandling.EntityNotFoundException;
+import utils.EMF_Creator;
 
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,17 +18,19 @@ import javax.ws.rs.core.Response;
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("person")
 public class PersonResource {
-       
-    private static final IDataFacade<PersonDTO> FACADE =  PersonDTOFacade.getFacade();
+
+    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+    private static final PersonFacade FACADE =  PersonFacade.getPersonFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
-        return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
+
+        return Response.ok().entity(GSON.toJson(FACADE.getAllPeople())).build();
     }
 
-    @GET
+   /* @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
@@ -63,4 +65,6 @@ public class PersonResource {
         PersonDTO deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
+
+    */
 }

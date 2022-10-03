@@ -1,9 +1,10 @@
 package datafacades;
 
+import dtos.CityInfoDTO;
+import dtos.PersonDTO;
 import entities.Cityinfo;
-import entities.Movie;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,7 +17,7 @@ import java.util.List;
  * Purpose of this facade example is to show a facade used as a DB facade (only operating on entity classes - no DTOs
  * And to show case some different scenarios
  */
-public class CityInfoFacade implements IDataFacade<Cityinfo> {
+public class CityInfoFacade {
 
     private static CityInfoFacade instance;
     private static EntityManagerFactory emf;
@@ -30,7 +31,7 @@ public class CityInfoFacade implements IDataFacade<Cityinfo> {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static IDataFacade<Cityinfo> getCityInfoFacade(EntityManagerFactory _emf) {
+    public static CityInfoFacade getCityInfoFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new CityInfoFacade();
@@ -42,37 +43,34 @@ public class CityInfoFacade implements IDataFacade<Cityinfo> {
         return emf.createEntityManager();
     }
 
-    @Override
-    public Cityinfo create(Cityinfo c){
-        return c;
-    }
-
-    @Override
-    public Cityinfo getById(int id) throws EntityNotFoundException {
+    public CityInfoDTO getCityInfoById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
-        Cityinfo c = em.find(Cityinfo.class, id);
-        if (c == null)
-            throw new EntityNotFoundException("The CityInfo entity with ID: "+id+" Was not found");
-        return c;
+
+        try{
+
+            TypedQuery findCityInfo = em.createQuery("SELECT c FROM Cityinfo c WHERE c.id =:cityinfo_id", Cityinfo.class);
+            findCityInfo.setParameter("cityinfo_id",id);
+            Cityinfo cityInfoFound = (Cityinfo) findCityInfo.getSingleResult();
+            return new CityInfoDTO(cityInfoFound);
+
+        } finally {
+            em.close();
+        }
     }
 
-    @Override
-    public List<Cityinfo> getAll(){
+
+    public List<CityInfoDTO> getAll(){
         EntityManager em = getEntityManager();
-        TypedQuery<Cityinfo> query = em.createQuery("SELECT c FROM Cityinfo c", Cityinfo.class);
-        List<Cityinfo> cityinfos = query.getResultList();
-        return cityinfos;
-    }
 
-    @Override
-    public Cityinfo update(Cityinfo cityinfo) throws EntityNotFoundException {
-        return null;
-    }
+        try{
 
-    @Override
-    public Cityinfo delete(int id) throws EntityNotFoundException {
-        return null;
-    }
+            TypedQuery findAll = em.createQuery("SELECT c FROM Cityinfo c", Cityinfo.class);
+            List<Cityinfo> cityinfos = findAll.getResultList();
+            return CityInfoDTO.getDTOs(cityinfos);
 
+        }finally {
+            em.close();
+        }
+    }
 
 }
