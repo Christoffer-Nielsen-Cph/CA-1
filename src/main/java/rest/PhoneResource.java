@@ -1,24 +1,33 @@
 package rest;
 
 import businessfacades.MovieDTOFacade;
+import businessfacades.PhoneDTOFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.IDataFacade;
+import datafacades.PhoneFacade;
 import dtos.MovieDTO;
+import dtos.PhoneDTO;
+import entities.Phone;
 import errorhandling.EntityNotFoundException;
+import utils.EMF_Creator;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("movie")
+@Path("phone")
 public class PhoneResource {
-       
-    private static final IDataFacade<MovieDTO> FACADE =  MovieDTOFacade.getFacade();
+
+    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+
+    private static final IDataFacade<PhoneDTO> FACADE =  PhoneDTOFacade.getFacade();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-            
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
@@ -29,17 +38,17 @@ public class PhoneResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
-        MovieDTO m = FACADE.getById(id);
-        return Response.ok().entity(GSON.toJson(m)).build();
+        PhoneDTO p = FACADE.getById(id);
+        return Response.ok().entity(GSON.toJson(p)).build();
     }
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
-        MovieDTO movieDTO = GSON.fromJson(content, MovieDTO.class);
-        MovieDTO newMdto = FACADE.create(movieDTO);
-        return Response.ok().entity(GSON.toJson(newMdto)).build();
+        PhoneDTO phoneDTO = GSON.fromJson(content, PhoneDTO.class);
+        PhoneDTO newPdto = FACADE.create(phoneDTO);
+        return Response.ok().entity(GSON.toJson(newPdto)).build();
     }
 
     @PUT
@@ -47,9 +56,9 @@ public class PhoneResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response update(@PathParam("id") int id, String content) throws EntityNotFoundException {
-        MovieDTO mdto = GSON.fromJson(content, MovieDTO.class);
-        mdto.setId(id);
-        MovieDTO updated = FACADE.update(mdto);
+        PhoneDTO pdto = GSON.fromJson(content, PhoneDTO.class);
+        pdto.setId(id);
+        PhoneDTO updated = FACADE.update(pdto);
         return Response.ok().entity(GSON.toJson(updated)).build();
     }
 
@@ -57,7 +66,7 @@ public class PhoneResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
-        MovieDTO deleted = FACADE.delete(id);
+        PhoneDTO deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
 }
