@@ -1,18 +1,12 @@
 package rest;
 
-import businessfacades.MovieDTOFacade;
 import businessfacades.PhoneDTOFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.IDataFacade;
-import datafacades.PhoneFacade;
-import dtos.MovieDTO;
-import dtos.PhoneDTO;
-import entities.Phone;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

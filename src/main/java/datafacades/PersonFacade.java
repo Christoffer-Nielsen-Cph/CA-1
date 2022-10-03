@@ -1,5 +1,6 @@
 package datafacades;
 
+import dtos.PersonDTO;
 import entities.Address;
 import entities.Hobby;
 import entities.Person;
@@ -47,9 +48,9 @@ public class PersonFacade implements IDataFacade<Person> {
     }
 
     @Override
-    public Person create(Person p){
+    public Person create(Person person){
         EntityManager em = getEntityManager();
-        Person person = new Person(p.getEmail(),p.getFirstName(),p.getLastName(),p.getAddress());
+
         try {
             em.getTransaction().begin();
             em.persist(person);
@@ -62,7 +63,7 @@ public class PersonFacade implements IDataFacade<Person> {
 
 
     @Override
-    public Person getById(int id) throws EntityNotFoundException {
+    public PersonDTO getById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();
         Person p = em.find(Person.class, id);
         if (p == null)
@@ -71,10 +72,10 @@ public class PersonFacade implements IDataFacade<Person> {
     }
 
     @Override
-    public List<Person> getAll(){
+    public List<PersonDTO> getAll(){
         EntityManager em = getEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> person = query.getResultList();
+        TypedQuery<PersonDTO> query = em.createQuery("SELECT p FROM Person p", PersonDTO.class);
+        List<PersonDTO> person = query.getResultList();
         return person;
     }
 

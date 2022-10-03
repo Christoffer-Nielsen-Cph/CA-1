@@ -4,7 +4,6 @@ import businessfacades.HobbyDTOFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.IDataFacade;
-import dtos.HobbyDTO;
 import errorhandling.EntityNotFoundException;
 
 import javax.ws.rs.*;

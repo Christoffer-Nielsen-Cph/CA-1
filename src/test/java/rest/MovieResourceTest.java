@@ -2,7 +2,6 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dtos.MovieDTO;
 import entities.Movie;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

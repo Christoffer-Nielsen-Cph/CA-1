@@ -8,7 +8,6 @@ package utils;
 import java.util.Properties;
 import java.util.Set;
 import com.google.gson.*;
-import dtos.MovieDTO;
 
 import java.io.UnsupportedEncodingException;
 

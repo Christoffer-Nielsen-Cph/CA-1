@@ -1,14 +1,11 @@
-package businessfacades;
+/* package businessfacades;
 
 import datafacades.IDataFacade;
 import datafacades.PersonFacade;
-import dtos.PersonDTO;
 import entities.Person;
-import entities.Phone;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class PersonDTOFacade implements IDataFacade<PersonDTO> {
@@ -67,3 +64,5 @@ public class PersonDTOFacade implements IDataFacade<PersonDTO> {
     }
 
 }
+
+ */

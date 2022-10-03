@@ -1,10 +1,8 @@
 package rest;
 
-import businessfacades.MovieDTOFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.IDataFacade;
-import dtos.MovieDTO;
 import errorhandling.EntityNotFoundException;
 
 import javax.ws.rs.*;

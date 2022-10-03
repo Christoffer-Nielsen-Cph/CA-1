@@ -1,53 +1,142 @@
 package dtos;
 
-import entities.Hobby;
-import entities.Hobby;
-import entities.Person;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class HobbyDTO {
+public class HobbyDTO implements Serializable {
     private int id;
-    private String desciption;
-    private Set<Person> people;
+    private String description;
+    private Set<PersonInnerDTO> people = new LinkedHashSet<>();
 
-    public HobbyDTO(Hobby Hobby) {
-        if(Hobby.getId()!=0)
-            this.id = Hobby.getId();
-            this.desciption = Hobby.getDescription();
+    public HobbyDTO() {
     }
 
-    public static List<HobbyDTO> toList(List<Hobby> Hobbys) {
-        return Hobbys.stream().map(HobbyDTO::new).collect(Collectors.toList());
+    public HobbyDTO(int id, String description, Set<PersonInnerDTO> people) {
+        this.id = id;
+        this.description = description;
+        this.people = people;
     }
 
-
-    public Hobby getEntity(){
-        Hobby m = new Hobby(this.desciption,this.people);
-        if(id != 0)
-            m.setId(this.id);
-
-        return m;
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<PersonInnerDTO> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Set<PersonInnerDTO> people) {
+        this.people = people;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HobbyDTO hobbyDTO = (HobbyDTO) o;
-        return id == hobbyDTO.id && desciption.equals(hobbyDTO.desciption) && people.equals(hobbyDTO.people);
+        HobbyDTO entity = (HobbyDTO) o;
+        return Objects.equals(this.id, entity.id) &&
+                Objects.equals(this.description, entity.description) &&
+                Objects.equals(this.people, entity.people);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, desciption, people);
+        return Objects.hash(id, description, people);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "description = " + description + ", " +
+                "people = " + people + ")";
+    }
+
+    public static class PersonInnerDTO implements Serializable {
+        private int id;
+        private String email;
+        private String firstName;
+        private String lastName;
+
+        public PersonInnerDTO() {
+        }
+
+        public PersonInnerDTO(int id, String email, String firstName, String lastName) {
+            this.id = id;
+            this.email = email;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PersonInnerDTO entity = (PersonInnerDTO) o;
+            return Objects.equals(this.id, entity.id) &&
+                    Objects.equals(this.email, entity.email) &&
+                    Objects.equals(this.firstName, entity.firstName) &&
+                    Objects.equals(this.lastName, entity.lastName);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, email, firstName, lastName);
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "email = " + email + ", " +
+                    "firstName = " + firstName + ", " +
+                    "lastName = " + lastName + ")";
+        }
     }
 }
