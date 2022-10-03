@@ -2,6 +2,7 @@ package datafacades;
 
 import dtos.PhoneDTO;
 import entities.*;
+import errorhandling.DuplicateException;
 import errorhandling.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -60,7 +61,7 @@ class PhoneFacadeTest {
 
 
     @Test
-    void create() {
+    void create() throws DuplicateException {
         System.out.println("Testing create(Phone p)");
 
         Phone p = new Phone(2022,"Rock");

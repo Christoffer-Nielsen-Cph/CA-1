@@ -13,22 +13,17 @@ public class CityInfoDTO implements Serializable {
     private final int zipCode;
     private final String city;
     private List<AddressInnerDTO> addresses;
-
     public CityInfoDTO(int id, int zipCode, String city, List<AddressInnerDTO> addresses) {
         this.id = id;
         this.zipCode = zipCode;
         this.city = city;
         this.addresses = addresses;
     }
-
     public CityInfoDTO(Cityinfo cityinfo) {
         this.id = cityinfo.getId();
         this.zipCode = cityinfo.getZipCode();
         this.city = cityinfo.getCity();
-
     }
-
-
     public static List<CityInfoDTO> getDTOs(List<Cityinfo> cityinfos){
         List<CityInfoDTO> cityInfoDTOS = new ArrayList<>();
         cityinfos.forEach(cityinfo-> {
@@ -67,7 +62,6 @@ public class CityInfoDTO implements Serializable {
         private final int id;
         private final String address;
         private final String additionalInfo;
-
         public AddressInnerDTO(int id, String address, String additionalInfo) {
             this.id = id;
             this.address = address;

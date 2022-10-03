@@ -30,7 +30,6 @@ public class Person {
     @ManyToOne(fetch = FetchType.EAGER, optional = false,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = true)
     private Address address;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "persons_hobbies",
             joinColumns = @JoinColumn(name = "person_id"),

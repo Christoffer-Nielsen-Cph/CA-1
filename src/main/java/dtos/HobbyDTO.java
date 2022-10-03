@@ -11,7 +11,6 @@ public class HobbyDTO implements Serializable {
     private final int id;
     private final String description;
     private List<PersonInnerDTO> people = new ArrayList<>();
-
     public HobbyDTO(int id, String description, List<PersonInnerDTO> people) {
         this.id = id;
         this.description = description;
@@ -25,7 +24,8 @@ public class HobbyDTO implements Serializable {
             people.add(new PersonInnerDTO(person));
         });
     }
-    public static List<HobbyDTO> getDTOs(List<Hobby> hobbies){
+
+    public static List<HobbyDTO> getDTOs(List<Hobby> hobbies) {
         List<HobbyDTO> hobbyDTOList = new ArrayList<>();
         hobbies.forEach(hobby -> {
             hobbyDTOList.add(new HobbyDTO(hobby));
@@ -59,14 +59,12 @@ public class HobbyDTO implements Serializable {
         private final String email;
         private final String firstName;
         private final String lastName;
-
         public PersonInnerDTO(int id, String email, String firstName, String lastName) {
             this.id = id;
             this.email = email;
             this.firstName = firstName;
             this.lastName = lastName;
         }
-
         public PersonInnerDTO(Person person) {
             this.id = person.getId();
             this.email = person.getEmail();

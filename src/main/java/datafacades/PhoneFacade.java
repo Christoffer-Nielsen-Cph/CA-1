@@ -4,12 +4,14 @@ import dtos.PersonDTO;
 import dtos.PhoneDTO;
 import entities.Person;
 import entities.Phone;
+import errorhandling.DuplicateException;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -45,19 +47,39 @@ public class PhoneFacade {
     }
 
 
-    public Phone create(Phone phone){
+    public Phone create(Phone phone) throws DuplicateException {
         EntityManager em = getEntityManager();
 
         try {
             em.getTransaction().begin();
             em.persist(phone);
             em.getTransaction().commit();
-        } finally {
+        } catch (Exception e){
+            if(e.getCause() != null && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException){
+                SQLIntegrityConstraintViolationException sql_violation_exception = (SQLIntegrityConstraintViolationException) e.getCause().getCause();
+                throw new DuplicateException("A phone with that number already exist!");
+            }
+        }
+        finally {
             em.close();
         }
         return phone;
     }
 
+
+    public PersonDTO getPersonByPhone(int phoneNumber) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+
+        try{
+            TypedQuery findPerson = em.createQuery("SELECT p from Phone p WHERE p.number = :number",Phone.class);
+            findPerson.setParameter("number",phoneNumber);
+            Phone phoneFound = (Phone) findPerson.getSingleResult();
+            Person person = phoneFound.getPerson();
+            return new PersonDTO(person);
+        } finally {
+            em.close();
+        }
+    }
 
     public PhoneDTO getPhoneById(int id) throws EntityNotFoundException {
         EntityManager em = getEntityManager();

@@ -2,6 +2,7 @@
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.Person;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
@@ -34,7 +35,8 @@ public class MovieResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Movie m1, m2;
+
+    private static Person p1, p2;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
@@ -73,14 +75,14 @@ public class MovieResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        m1 = new Movie(2019, "GTA the movie");
-        m2 = new Movie(2020, "Titanic");
+        p1 = new Person("christoffer@christoffer.com","christoffer","nielsen");
+        p2 = new Person("rasmus@rasmus.com","rasmus","taulo");
 
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Movie.deleteAllRows").executeUpdate();
-            em.persist(m1);
-            em.persist(m2);
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(p1);
+            em.persist(p2);
 
             em.getTransaction().commit();
         } finally {
@@ -91,14 +93,14 @@ public class MovieResourceTest {
     @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
-        given().when().get("/movie").then().statusCode(200);
+        given().when().get("/person").then().statusCode(200);
     }
 
     @Test
     public void testLogRequest() {
         System.out.println("Testing logging request details");
         given().log().all()
-                .when().get("/movie")
+                .when().get("/person")
                 .then().statusCode(200);
     }
 
@@ -106,7 +108,7 @@ public class MovieResourceTest {
     public void testLogResponse() {
         System.out.println("Testing logging response details");
         given()
-                .when().get("/movie")
+                .when().get("/person")
                 .then().log().body().statusCode(200);
     }
 
@@ -114,13 +116,13 @@ public class MovieResourceTest {
     public void testGetById()  {
         given()
                 .contentType(ContentType.JSON)
-                .get("/movie/{id}",m1.getId())
+                .get("/person/{id}",p1.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("id", equalTo(m1.getId()))
-                .body("year", equalTo(m1.getYear()))
-                .body("title",equalTo(m1.getTitle()));
+                .body("id", equalTo(p1.getId()))
+                .body("firstName", equalTo(p1.getFirstName()))
+                .body("lastName",equalTo(p1.getLastName()));
     }
 
     @Test
@@ -128,29 +130,31 @@ public class MovieResourceTest {
         given()
                 .contentType(ContentType.JSON)
 //                .pathParam("id", p1.getId()).when()
-                .get("/movie/{id}",999999999)
+                .get("/person/{id}",999999999)
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode())
                 .body("code", equalTo(404))
-                .body("message", equalTo("The Movie entity with ID: 999999999 Was not found"));
+                .body("message", equalTo("The person entity with ID: 999999999 Was not found"));
     }
 
     @Test
     public void testPrintResponse(){
-        Response response = given().when().get("/movie/"+m1.getId());
+        Response response = given().when().get("/person/"+p1.getId());
         ResponseBody body = response.getBody();
         System.out.println(body.prettyPrint());
 
         response
                 .then()
                 .assertThat()
-                .body("year",equalTo(2019));
+                .body("firstName",equalTo("christoffer"));
     }
+
 
     @Test 
     public void exampleJsonPathTest() {
-        Response res = given().get("/movie/"+m1.getId());
+        Response res = given().get("/movie/"+
+        .getId());
         assertEquals(200, res.getStatusCode());
         String json = res.asString();
         JsonPath jsonPath = new JsonPath(json);
@@ -279,6 +283,8 @@ public class MovieResourceTest {
 
     }
 
+
+
 }
 
- */
+*/

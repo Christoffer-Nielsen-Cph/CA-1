@@ -4,7 +4,8 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datafacades.CityInfoFacade;
-import datafacades.PersonFacade;
+import datafacades.PhoneFacade;
+import dtos.PersonDTO;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -18,30 +19,26 @@ import javax.ws.rs.core.Response;
 
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("cityinfo")
-public class CityInfoResource {
+@Path("phone")
+public class PhoneResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
-    private static final CityInfoFacade FACADE =  CityInfoFacade.getCityInfoFacade(EMF);
+    private static final PhoneFacade FACADE =  PhoneFacade.getPhoneFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
 
-        return Response.ok().entity(GSON.toJson(FACADE.getAll())).build();
+        return Response.ok().entity(GSON.toJson(FACADE.getAllPhones())).build();
     }
 
     @GET
-    @Path("/{zipCode}")
+    @Path("/{number}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getPeopleByZipCode(@PathParam("zipCode") int zipCode) throws EntityNotFoundException {
-        try{
-            return Response.ok().entity(GSON.toJson(FACADE.getPeopleByZipCode(zipCode))).build();
-        } catch (Exception e){
-            throw new EntityNotFoundException("There's no people in that zipcode!");
-        }
-
+    public Response getById(@PathParam("number") int number) throws EntityNotFoundException {
+        PersonDTO p = FACADE.getPersonByPhone(number);
+        return Response.ok().entity(GSON.toJson(p)).build();
     }
 
 }

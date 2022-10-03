@@ -58,6 +58,31 @@ public class CityInfoFacade {
         }
     }
 
+    public List<PersonDTO> getPeopleByZipCode(int zipCode) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Person> findPeople = em.createQuery("SELECT p FROM Person p JOIN p.address a JOIN a.cityinfo ci WHERE ci.zipCode = :zipCode",Person.class);
+            findPeople.setParameter("zipCode",zipCode);
+            List<Person> personDTOList = findPeople.getResultList();
+            return PersonDTO.getDTOs(personDTOList);
+        } catch (Exception e){
+            throw new EntityNotFoundException("There are no people living in that zipcode!");
+        } finally {
+            em.close();
+        }
+
+    }
+/*
+ try {
+            TypedQuery<Person> findPeople = em.createQuery("SELECT p.person FROM PersonsHobby p JOIN p.hobby h WHERE h.description = :description", Person.class);
+            findPeople.setParameter("description", hobbyName);
+            List<Person> personDTOList = findPeople.getResultList();
+            return PersonDTO.getDTOs(personDTOList);
+
+        } finally {
+            em.close();
+        }
+ */
 
     public List<CityInfoDTO> getAll(){
         EntityManager em = getEntityManager();

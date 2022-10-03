@@ -3,9 +3,9 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import datafacades.IDataFacade;
 import datafacades.PersonFacade;
 import dtos.PersonDTO;
+import entities.Person;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -30,20 +30,21 @@ public class PersonResource {
         return Response.ok().entity(GSON.toJson(FACADE.getAllPeople())).build();
     }
 
-   /* @GET
+    @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getById(@PathParam("id") int id) throws EntityNotFoundException {
-        PersonDTO p = FACADE.getById(id);
+        PersonDTO p = FACADE.getPersonById(id);
         return Response.ok().entity(GSON.toJson(p)).build();
     }
 
+/*
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
         PersonDTO personDTO = GSON.fromJson(content, PersonDTO.class);
-        PersonDTO newPdto = FACADE.create(personDTO);
+        Person newPdto = FACADE.create(personDTO);
         return Response.ok().entity(GSON.toJson(newPdto)).build();
     }
 

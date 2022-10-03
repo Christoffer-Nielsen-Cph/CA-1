@@ -1,9 +1,6 @@
 package dtos;
 
-import entities.Address;
-import entities.Hobby;
-import entities.Person;
-import entities.Phone;
+import entities.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +15,6 @@ public class PersonDTO implements Serializable {
     private AddressInnerDTO address;
     private final List<HobbyInnerDTO> hobbies = new ArrayList<>();
     private final List<PhoneInnerDTO> phones = new ArrayList<>();
-
 
     public PersonDTO(int id, String email, String firstName, String lastName, AddressInnerDTO address) {
         this.id = id;
@@ -49,7 +45,7 @@ public class PersonDTO implements Serializable {
         });
     }
 
-    public static List<PersonDTO> getDTOs(List<Person> people){
+    public static List<PersonDTO> getDTOs(List<Person> people) {
         List<PersonDTO> personDTOList = new ArrayList<>();
         people.forEach(person -> {
             personDTOList.add(new PersonDTO(person));
@@ -86,7 +82,6 @@ public class PersonDTO implements Serializable {
     public List<PhoneInnerDTO> getPhones() {
         return phones;
     }
-
     @Override
     public String toString() {
         return getClass().getSimpleName() + "(" +
@@ -103,6 +98,8 @@ public class PersonDTO implements Serializable {
         private final int id;
         private final String address;
         private final String additionalInfo;
+        private int zipCode;
+        private String cityName;
 
         public AddressInnerDTO(int id, String address, String additionalInfo) {
             this.id = id;
@@ -114,6 +111,8 @@ public class PersonDTO implements Serializable {
             this.id = address.getId();
             this.address = address.getAddress();
             this.additionalInfo = address.getAdditionalInfo();
+            this.zipCode = address.getCityinfo().getZipCode();
+            this.cityName = address.getCityinfo().getCity();
         }
 
         public int getId() {
@@ -140,7 +139,6 @@ public class PersonDTO implements Serializable {
     public static class HobbyInnerDTO implements Serializable {
         private final int id;
         private final String description;
-
         public HobbyInnerDTO(int id, String description) {
             this.id = id;
             this.description = description;
@@ -204,4 +202,5 @@ public class PersonDTO implements Serializable {
                     "description = " + description + ")";
         }
     }
+
 }

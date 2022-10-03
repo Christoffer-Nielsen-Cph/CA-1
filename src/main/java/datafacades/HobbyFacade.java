@@ -63,6 +63,32 @@ public class HobbyFacade{
         }
     }
 
+    public List<PersonDTO> getPeopleByHobby(String hobbyName) throws EntityNotFoundException{
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Person> findPeople = em.createQuery("SELECT p.person FROM PersonsHobby p JOIN p.hobby h WHERE h.description = :description", Person.class);
+            findPeople.setParameter("description", hobbyName);
+            List<Person> personDTOList = findPeople.getResultList();
+            return PersonDTO.getDTOs(personDTOList);
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public int AmountOfPeopleWithSpecificHobby(String hobbyName) throws EntityNotFoundException{
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Person> findPeople = em.createQuery("SELECT COUNT(p.person) FROM PersonsHobby p JOIN p.hobby h WHERE h.description = :description", Person.class);
+            findPeople.setParameter("description", hobbyName);
+            List<Person> personDTOList = findPeople.getResultList();
+            return personDTOList.size();
+
+        } finally {
+            em.close();
+        }
+    }
+
 
     public List<HobbyDTO> getAll() {
         EntityManager em = getEntityManager();

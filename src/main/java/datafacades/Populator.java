@@ -8,6 +8,7 @@ package datafacades;
 import javax.persistence.EntityManagerFactory;
 
 import entities.*;
+import errorhandling.DuplicateException;
 import errorhandling.EntityNotFoundException;
 import utils.EMF_Creator;
 
@@ -16,18 +17,15 @@ import utils.EMF_Creator;
  * @author tha
  */
 public class Populator {
-    public static void populate() throws EntityNotFoundException {
+    public static void populate() throws EntityNotFoundException, DuplicateException {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade pf = PersonFacade.getPersonFacade(emf);
         HobbyFacade hf = HobbyFacade.getHobbyFacade(emf);
-        Person p1 = new Person("test@test.com","Test","Testesen",new Address("Testvej 1","Testtest",new Cityinfo(1,2323,"Testby")));
-        Person p2 = new Person("second@second.com","Second","Secondsen",new Address("Secondvej 2","Secondsecond",new Cityinfo(2,2323,"Secondby")));
-        Hobby h1 = new Hobby("Fishing");
+        PhoneFacade phoneFacade = PhoneFacade.getPhoneFacade(emf);
+        phoneFacade.create(new Phone(911,"samsung"));
 
-       // pf.create(p1);
-       // pf.create(p2);
-       // pf.addHobbyToPerson(1,1);
-       // pf.addPhoneToPerson(1,1);
+
+
 
 
 
@@ -36,7 +34,7 @@ public class Populator {
 
     }
 
-    public static void main(String[] args) throws EntityNotFoundException {
+    public static void main(String[] args) throws EntityNotFoundException, DuplicateException {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
 

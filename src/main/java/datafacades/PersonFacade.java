@@ -65,6 +65,19 @@ public class PersonFacade  {
     }
 
 
+   /* public PersonDTO getPersonByPhone(int phoneNumber){
+        EntityManager em = getEntityManager();
+
+        try{
+            TypedQuery findPerson = em.createQuery("SELECT p FROM Person p WHERE p.phone.number = :number",Person.class);
+            findPerson.setParameter("number",phoneNumber);
+            Person personFound = (Person) findPerson.getSingleResult();
+            return new PersonDTO(personFound);
+        } finally {
+            em.close();
+        }
+    } */
+
 
     public PersonDTO getPersonById(int id) throws EntityNotFoundException {
 

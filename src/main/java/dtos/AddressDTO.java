@@ -115,7 +115,6 @@ public class AddressDTO implements Serializable {
         private final String email;
         private final String firstName;
         private final String lastName;
-
         public PersonInnerDTO(int id, String email, String firstName, String lastName) {
             this.id = id;
             this.email = email;

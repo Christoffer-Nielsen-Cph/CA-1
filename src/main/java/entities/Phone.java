@@ -15,7 +15,7 @@ public class Phone {
     @Column(name = "phone_id", nullable = false)
     private int id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "number", nullable = false, unique = true)
     private int number;
 
     @Column(name = "description", nullable = false, length = 45)
