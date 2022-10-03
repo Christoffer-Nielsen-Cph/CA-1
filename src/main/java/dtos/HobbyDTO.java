@@ -18,6 +18,7 @@ public class HobbyDTO {
     public HobbyDTO(Hobby Hobby) {
         if(Hobby.getId()!=0)
             this.id = Hobby.getId();
+            this.desciption = Hobby.getDescription();
     }
 
     public static List<HobbyDTO> toList(List<Hobby> Hobbys) {

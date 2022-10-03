@@ -20,7 +20,6 @@ public class PhoneDTO {
             this.id = phone.getId();
         this.number = phone.getNumber();
         this.description = phone.getDescription();
-        this.person = phone.getPerson();
     }
 
     public static List<PhoneDTO> toList(List<Phone> phones) {
