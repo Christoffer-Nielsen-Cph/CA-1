@@ -5,7 +5,7 @@ import errorhandling.EntityNotFoundExceptionMapper;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-@javax.ws.rs.ApplicationPath("api")
+@javax.ws.rs.ApplicationPath("/ca1_application/api")
 public class ApplicationConfig extends Application {
 
     @Override
