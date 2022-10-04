@@ -47,26 +47,28 @@ public class PersonResource {
         Person newPerson = FACADE.create(personJson);
         return Response.ok().entity(GSON.toJson(newPerson)).build();
     }
-    /*
+
 
     @PUT
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response update(@PathParam("id") int id, String content) throws EntityNotFoundException {
-        PersonDTO pdto = GSON.fromJson(content, PersonDTO.class);
-        pdto.setPerson_Id(id);
-        PersonDTO updated = FACADE.update(pdto);
+        Person personJson = GSON.fromJson(content, Person.class);
+        personJson.setId(id);
+        Person updated = FACADE.update(personJson);
         return Response.ok().entity(GSON.toJson(updated)).build();
     }
+
 
     @DELETE
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") int id) throws EntityNotFoundException {
-        PersonDTO deleted = FACADE.delete(id);
+        Person deleted = FACADE.delete(id);
         return Response.ok().entity(GSON.toJson(deleted)).build();
     }
 
-    */
+
 }

@@ -15,4 +15,13 @@ Content-Type: application/json
 
 {"email": "http@dk.dk", "firstName": "Gunar","lastName": "Olesen"}
 
+###
+PUT http://localhost:8080/ca1_application_war_exploded/api/person/33
+Content-Type: application/json
+
+{"email": "adolf@dk.dk","firstName": "Adolf","lastName": "Martin"}
+
+###
+DELETE http://localhost:8080/ca1_application_war_exploded/api/person/33
+Content-Type: application/json
 
