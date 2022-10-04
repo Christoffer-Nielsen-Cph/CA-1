@@ -36,7 +36,7 @@ public class PhoneResource {
     @GET
     @Path("/{number}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getById(@PathParam("number") int number) throws EntityNotFoundException {
+    public Response getPersonByNumber(@PathParam("number") int number) throws EntityNotFoundException {
         PersonDTO p = FACADE.getPersonByPhone(number);
         return Response.ok().entity(GSON.toJson(p)).build();
     }

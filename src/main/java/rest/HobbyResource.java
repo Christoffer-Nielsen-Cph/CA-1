@@ -36,7 +36,7 @@ public class HobbyResource {
     @GET
     @Path("/{description}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getPersonByHobby(@PathParam("description") String description) throws EntityNotFoundException {
+    public Response getPeopleByHobby(@PathParam("description") String description) throws EntityNotFoundException {
         try{
             return Response.ok().entity(GSON.toJson(FACADE.getPeopleByHobby(description))).build();
         } catch (Exception e){
