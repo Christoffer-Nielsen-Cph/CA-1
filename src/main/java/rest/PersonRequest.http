@@ -1,3 +1,7 @@
+GET http://localhost:8080/ca1_application_war_exploded/api/xxx
+
+
+###
 GET http://localhost:8080/ca1_application_war_exploded/api/person
 Accept: application/json
 
