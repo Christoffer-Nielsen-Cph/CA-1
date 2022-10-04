@@ -8,6 +8,7 @@ import errorhandling.EntityNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -76,13 +77,15 @@ public class HobbyFacade{
         }
     }
 
-    public int AmountOfPeopleWithSpecificHobby(String hobbyName) throws EntityNotFoundException{
+    public int AmountOfPeopleWithSpecificHobby(String description) throws EntityNotFoundException{
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Person> findPeople = em.createQuery("SELECT COUNT(p.person) FROM PersonsHobby p JOIN p.hobby h WHERE h.description = :description", Person.class);
-            findPeople.setParameter("description", hobbyName);
-            List<Person> personDTOList = findPeople.getResultList();
-            return personDTOList.size();
+            Query findPeople = em.createQuery("SELECT p.person FROM PersonsHobby p JOIN p.hobby h WHERE h.description = :description", Person.class);
+            findPeople.setParameter("description", description);
+            List<Person> personList = findPeople.getResultList();
+            return personList.size();
+
+
 
         } finally {
             em.close();
