@@ -13,6 +13,7 @@ public class PersonDTO implements Serializable {
     private final String firstName;
     private final String lastName;
     private AddressInnerDTO address;
+    private CityInfoInnerDTO cityInfo;
     private final List<HobbyInnerDTO> hobbies = new ArrayList<>();
     private final List<PhoneInnerDTO> phones = new ArrayList<>();
 
@@ -98,8 +99,8 @@ public class PersonDTO implements Serializable {
         private final int id;
         private final String address;
         private final String additionalInfo;
-        private int zipCode;
-        private String cityName;
+
+        public CityInfoInnerDTO cityInfo;
 
         public AddressInnerDTO(int id, String address, String additionalInfo) {
             this.id = id;
@@ -111,8 +112,7 @@ public class PersonDTO implements Serializable {
             this.id = address.getId();
             this.address = address.getAddress();
             this.additionalInfo = address.getAdditionalInfo();
-            this.zipCode = address.getCityinfo().getZipCode();
-            this.cityName = address.getCityinfo().getCity();
+            this.cityInfo = new CityInfoInnerDTO(address.getCityinfo().getId(),address.getCityinfo().getZipCode(),address.getCityinfo().getCity());
         }
 
         public int getId() {
@@ -200,6 +200,44 @@ public class PersonDTO implements Serializable {
                     "id = " + id + ", " +
                     "number = " + number + ", " +
                     "description = " + description + ")";
+        }
+    }
+    public static class CityInfoInnerDTO implements Serializable{
+        private int id;
+        private final int zipCode;
+        private final String city;
+
+        public CityInfoInnerDTO(int id, int zipCode, String city) {
+            this.id = id;
+            this.zipCode = zipCode;
+            this.city = city;
+        }
+        public CityInfoInnerDTO(Integer id, Integer zipCode, String cityName) {
+            this.id = id;
+            this.zipCode = zipCode;
+            this.city = cityName;
+        }
+
+
+        public int getId() {
+            return id;
+        }
+
+        public int getZipCode() {
+            return zipCode;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        @Override
+        public String toString() {
+            return "CityInfoInnerDTO{" +
+                    "id=" + id +
+                    ", zipCode=" + zipCode +
+                    ", city='" + city + '\'' +
+                    '}';
         }
     }
 
