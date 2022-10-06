@@ -41,6 +41,7 @@ public class PersonResource {
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
+    @Path("/addperson")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
         Person personJson = GSON.fromJson(content, Person.class);
