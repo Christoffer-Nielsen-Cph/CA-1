@@ -51,11 +51,12 @@ public class PersonFacade  {
     public Person create(Person person){
 
         EntityManager em = getEntityManager();
+        Person newPerson = new Person(person.getEmail(),person.getFirstName(),person.getLastName(),person.getAddress());
 
         try {
 
             em.getTransaction().begin();
-            em.persist(person);
+            em.persist(newPerson);
             em.getTransaction().commit();
 
         } finally {

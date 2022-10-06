@@ -48,10 +48,11 @@ public class AddressFacade {
     public Address create(Address address){
 
         EntityManager em = getEntityManager();
+        Address newAddress = new Address(address.getAddress(),address.getAdditionalInfo());
 
         try {
             em.getTransaction().begin();
-            em.persist(address);
+            em.persist(newAddress);
             em.getTransaction().commit();
         } finally {
             em.close();

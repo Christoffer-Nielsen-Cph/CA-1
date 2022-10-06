@@ -24,7 +24,7 @@ public class Address {
     private String additionalInfo;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cityinfo_id", nullable = false)
+    @JoinColumn(name = "cityinfo_id", nullable = true)
     private Cityinfo cityinfo;
 
     @OneToMany(mappedBy = "address",cascade = CascadeType.PERSIST)
