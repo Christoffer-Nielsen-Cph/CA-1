@@ -46,8 +46,8 @@ import static org.hamcrest.Matchers.hasItems;
 public class RestAssurered {
 
 
-     private static final int SERVER_PORT = 7777;
-    private static final String SERVER_URL = "http://localhost:8080/ca1_application_war_exploded/api";
+    private static final int SERVER_PORT = 7777;
+    private static final String SERVER_URL = "http://localhost/api";
 
     private static Person p1, p2;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
