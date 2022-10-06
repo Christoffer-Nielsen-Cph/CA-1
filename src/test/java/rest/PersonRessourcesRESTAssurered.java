@@ -13,11 +13,7 @@ import entities.Person;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.jupiter.api.*;
@@ -27,7 +23,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -36,14 +31,11 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import io.restassured.RestAssured.*;
-import io.restassured.matcher.RestAssuredMatchers.*;
-import org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 
-public class RestAssurered {
+public class PersonRessourcesRESTAssurered {
 
 
      private static final int SERVER_PORT = 7777;
@@ -65,7 +57,7 @@ public class RestAssurered {
     public static void setUpClass() {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
-        emf = EMF_Creator.createEntityManagerFactoryForTest();
+        emf = EMF_Creator.createEntityManagerFactory();
 
         httpServer = startServer();
         //Setup RestAssured
