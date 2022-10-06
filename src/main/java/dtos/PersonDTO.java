@@ -46,6 +46,7 @@ public class PersonDTO implements Serializable {
         });
     }
 
+
     public static List<PersonDTO> getDTOs(List<Person> people) {
         List<PersonDTO> personDTOList = new ArrayList<>();
         people.forEach(person -> {
@@ -96,16 +97,19 @@ public class PersonDTO implements Serializable {
     }
 
     public static class AddressInnerDTO implements Serializable {
+
+
         private final int id;
         private final String address;
         private final String additionalInfo;
 
-        public CityInfoInnerDTO cityInfo;
+        private final CityInfoInnerDTO cityInfo;
 
-        public AddressInnerDTO(int id, String address, String additionalInfo) {
+        public AddressInnerDTO(int id, String address, String additionalInfo, CityInfoInnerDTO cityInfoInnerDTO) {
             this.id = id;
             this.address = address;
             this.additionalInfo = additionalInfo;
+            this.cityInfo = cityInfoInnerDTO;
         }
 
         public AddressInnerDTO(Address address) {
@@ -126,6 +130,10 @@ public class PersonDTO implements Serializable {
         public String getAdditionalInfo() {
             return additionalInfo;
         }
+        public CityInfoInnerDTO getCityInfo() {
+            return cityInfo;
+        }
+
 
         @Override
         public String toString() {

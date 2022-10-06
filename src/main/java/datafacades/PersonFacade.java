@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,35 @@ public class PersonFacade  {
             em.close();
         }
         return person;
+    }
+
+    public PersonDTO createDTOPerson (PersonDTO personDTO){
+        EntityManager em = getEntityManager();
+        Set<Hobby> hobbies = new LinkedHashSet<>();
+        personDTO.getHobbies().forEach(hobbyInnerDTO -> {
+            hobbies.add(em.find(Hobby.class,hobbyInnerDTO.getId()));
+        });
+        Set<Phone> phones = new LinkedHashSet<>();
+
+        Address address = em.find(Address.class,personDTO.getAddress().getId());
+        Person person = new Person(personDTO);
+        person.setHobbies(hobbies);
+        person.setAddress(address);
+        try{
+            em.getTransaction().begin();
+            personDTO.getPhones().forEach(phoneInnerDTO -> {
+                Phone phone = new Phone(phoneInnerDTO.getNumber(),phoneInnerDTO.getDescription(),person);
+                em.persist(phone);
+                phones.add(phone);
+                person.setPhones(phones);
+
+            });
+            em.persist(person);
+            em.getTransaction().commit();
+        }finally {
+            em.close();
+        }
+        return new PersonDTO(person);
     }
 
 

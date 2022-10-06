@@ -1,5 +1,8 @@
 package entities;
 
+import dtos.PersonDTO;
+import dtos.PhoneDTO;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -72,6 +75,22 @@ public class Person {
         this.address = address;
     }
 
+    public Person(PhoneDTO.PersonInnerDTO personDTO){
+        this.id = personDTO.getId();
+        this.email = personDTO.getEmail();
+        this.firstName = personDTO.getFirstName();
+        this.lastName = personDTO.getLastName();
+    }
+
+    public Person(PersonDTO personDTO){
+        this.id = personDTO.getId();
+        this.email = personDTO.getEmail();
+        this.firstName = personDTO.getFirstName();
+        this.lastName = personDTO.getLastName();
+        this.address = new Address(personDTO.getAddress().getId(), personDTO.getAddress().getAddress(), personDTO.getAddress().getAdditionalInfo(),
+                new Cityinfo(personDTO.getAddress().getCityInfo().getId(), personDTO.getAddress().getCityInfo().getZipCode(),
+                        personDTO.getAddress().getCityInfo().getCity()));
+    }
 
     public int getId() {
         return id;
