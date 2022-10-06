@@ -21,13 +21,6 @@ public class Populator {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade pf = PersonFacade.getPersonFacade(emf);
         HobbyFacade hf = HobbyFacade.getHobbyFacade(emf);
-        PhoneFacade phoneFacade = PhoneFacade.getPhoneFacade(emf);
-        AddressFacade af = AddressFacade.getAddressFacade(emf);
-        CityInfoFacade cif = CityInfoFacade.getCityInfoFacade(emf);
-//        pf.create(new Person("test@test.com", "Hans", "Hansen",new Address("street", "city",new Cityinfo(2800,"Lyngby"))));
-//        pf.create(new Person("hans@hansen.com", "Hans", "Hansen",new Address("road", "town",new Cityinfo(3370,"Melby"))));
-//        //hf.create(new Hobby("Fodbold"));
-        pf.addHobbyToPerson(4,1);
 
 
 
