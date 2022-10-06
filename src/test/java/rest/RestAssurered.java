@@ -57,7 +57,7 @@ public class RestAssurered {
     @Test
     public void AndersTestCheckoutPersonNameByID() {
       System.out.println("we're checking if we can take the firstname from localhost");
-        RestAssured.get("http://localhost:8080/ca1_application_war_exploded/api/person/1").then().statusCode(200).assertThat()
+        RestAssured.get("http://localhost:8080/ca1_application_war_exploded/api/person/4").then().statusCode(200).assertThat()
                 .body("firstName", equalTo("Anders"));
     }
     @Test
@@ -71,10 +71,5 @@ public class RestAssurered {
                 .get("/person")
                 .then()
                 .extract().body().jsonPath().getList("", PersonDTO.class);
-        Address address = new Address("nisseland","jul",new Cityinfo(4000,1000,"Kbh"));
-        pf.create(new Person("anders@meinicke.dk","Anders","Meinicke",address));
-        pf.create(new Person("emil@meinicke.dk","emil","Meinicke",address));
-        MovieDTO m2DTO = new MovieDTO(m2);
-        assertThat(movieDTOs, containsInAnyOrder(m1DTO, m2DTO));
     }
 }
