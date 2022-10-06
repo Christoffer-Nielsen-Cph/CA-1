@@ -123,6 +123,33 @@ public class PersonFacade  {
         return p;
     }
 
+    public Person update(int id, Person newPerson) throws EntityNotFoundException {
+        EntityManager em = getEntityManager();
+        Person oldPerson = em.find(Person.class,getPersonById(id));
+        if (oldPerson.getId() == 0) {
+            throw new IllegalArgumentException("No Person can be updated when id is missing");
+        }
+        if (newPerson.getFirstName() != null){
+            oldPerson.setFirstName(newPerson.getFirstName());
+        }
+        if (newPerson.getLastName() != null){
+            oldPerson.setLastName(newPerson.getLastName());
+        }
+        if (newPerson.getEmail() != null){
+            oldPerson.setEmail(newPerson.getEmail());
+        }
+        if (newPerson.getAddress() != null) {
+            oldPerson.setAddress(newPerson.getAddress());
+        }
+        if (newPerson.getPhones() != null){
+            oldPerson.setPhones(newPerson.getPhones());
+        }
+        em.getTransaction().begin();
+        oldPerson = em.merge(newPerson);
+        em.getTransaction().commit();
+        return oldPerson;
+    }
+
 
     public Person delete(int id) throws EntityNotFoundException{
         EntityManager em = getEntityManager();

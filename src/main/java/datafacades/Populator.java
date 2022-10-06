@@ -37,7 +37,7 @@ public class Populator {
     public static void main(String[] args) throws EntityNotFoundException, DuplicateException {
         populate();
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-
+        PersonFacade FACADE;
 
     }
 }
