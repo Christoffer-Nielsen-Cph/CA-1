@@ -57,7 +57,7 @@ public class PersonRessourcesRESTAssurered {
     public static void setUpClass() {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
-        emf = EMF_Creator.createEntityManagerFactory();
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
 
         httpServer = startServer();
         //Setup RestAssured
@@ -107,9 +107,8 @@ public class PersonRessourcesRESTAssurered {
         given().when().get("/person").then().statusCode(200);
     }
 
-    //TODO: remember to change the expected result after what is in your database
     @Test
-    public void AndersTestCheckoutPersonNameByID() {
+    public void CheckoutPersonNameByID() {
       System.out.println("we're checking if we can take the firstname from localhost");
       try {
           System.out.println("HERE IT IS");
@@ -141,6 +140,11 @@ public class PersonRessourcesRESTAssurered {
                 .then()
                 .extract().body().jsonPath().getList("", PersonDTO.class);
         assertEquals(personDTOs.size(), 2);
+    }
+
+    @Test
+    public void createNewPerson(){
+
     }
     @Test
     public void TestUpdatePerson(){
