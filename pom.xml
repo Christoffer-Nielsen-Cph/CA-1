@@ -104,6 +104,14 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.6.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -121,8 +129,13 @@
                     <password>${remote.password}</password>
                     <update>true</update>    
                 </configuration>  
-            </plugin>          
-            
+            </plugin>
+
+
+
+
+
+
             <!--This is used to enable @BeforeAll etc used in jUnit 5 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

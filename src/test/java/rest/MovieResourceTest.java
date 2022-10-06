@@ -241,7 +241,7 @@ public class MovieResourceTest {
     }
     @Test
     public void testPropAndValue() {
-        System.out.println("Check for property and value on an entity instance");
+        System.out.pgrintln("Check for property and value on an entity instance");
         Movie movie = new Movie(2009, "San Andreas");
         assertThat(movie, hasProperty("title", equalTo("San Andreas")));
     }
