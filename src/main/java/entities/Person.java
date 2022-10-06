@@ -50,6 +50,13 @@ public class Person {
 
     public Person() {
     }
+    public Person(int id, String email, String firstName, String lastName, Address address) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+    }
 
     public Person(String email, String firstName, String lastName) {
         this.email = email;
