@@ -24,6 +24,7 @@ public class PersonResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
     @GET
+    @Path("/all")
     @Produces({MediaType.APPLICATION_JSON})
     public Response getAll() {
 
