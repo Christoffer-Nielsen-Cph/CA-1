@@ -48,6 +48,8 @@ public class PersonResource {
         Person newPerson = FACADE.create(personJson);
         return Response.ok().entity(GSON.toJson(newPerson)).build();
     }
+
+
 //
 
     @PUT
