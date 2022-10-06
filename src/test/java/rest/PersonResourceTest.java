@@ -137,13 +137,33 @@ public class PersonResourceTest {
         personDTOs = given()
                 .contentType("application/json")
                 .when()
-                .get("/person")
+                .get("/person/all")
                 .then()
                 .extract().body().jsonPath().getList("", PersonDTO.class);
         assertEquals(personDTOs.size(), 2);
     }
     @Test
     public void TestUpdatePerson(){
-
+        p1.setFirstName("Scooby");
+        p2.setLastName("Doo");
+       given()
+                .contentType("application/json")
+               .put("/person/{id}",p1.getId());
+       given()
+               .get("/person/{id}", p1.getId())
+               .then()
+               .assertThat()
+               .body("firstName",equalTo("Scooby") )
+               .body("lastName", equalTo("Doo"));
+    }
+    @Test
+    public void testDeleteParent() {
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("id", p2.getId())
+                .delete("/person/{id}")
+                .then()
+                .statusCode(200)
+                .body("id",equalTo(p2.getId()));
     }
 }
