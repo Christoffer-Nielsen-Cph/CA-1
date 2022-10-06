@@ -41,13 +41,14 @@ public class PersonResource {
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
+    @Path("/addperson")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
         Person personJson = GSON.fromJson(content, Person.class);
         Person newPerson = FACADE.create(personJson);
         return Response.ok().entity(GSON.toJson(newPerson)).build();
     }
-
+//
 
     @PUT
     @Path("{id}")

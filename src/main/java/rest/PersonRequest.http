@@ -6,6 +6,10 @@ GET http://localhost:8080/ca1_application_war_exploded/api/person
 Accept: application/json
 
 ###
+GET http://localhost:8080/ca1_application_war_exploded/api/address
+Accept: application/json
+
+###
 GET http://localhost:8080/rest_snippets_war_exploded/api/person/2
 Accept: application/json
 
@@ -20,6 +24,12 @@ Content-Type: application/json
 {"email": "http@dk.dk", "firstName": "Gunar","lastName": "Olesen"}
 
 ###
+POST http://localhost:8080/ca1_application_war_exploded/api/address
+Content-Type: application/json
+
+{"address": "gunarvej", "additionalInfo": "ingen"}
+###
+
 PUT http://localhost:8080/ca1_application_war_exploded/api/person/33
 Content-Type: application/json
 
