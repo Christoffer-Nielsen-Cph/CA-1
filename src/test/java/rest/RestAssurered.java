@@ -150,4 +150,8 @@ public class RestAssurered {
                 .extract().body().jsonPath().getList("", PersonDTO.class);
         assertEquals(personDTOs.size(), 2);
     }
+    @Test
+    public void TestUpdatePerson(){
+
+    }
 }
