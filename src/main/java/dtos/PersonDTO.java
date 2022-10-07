@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.List;
 
 public class PersonDTO implements Serializable {
-    private final int id;
-    private final String email;
-    private final String firstName;
-    private final String lastName;
+    private  int id;
+    private  String email;
+    private  String firstName;
+    private  String lastName;
     private AddressInnerDTO address;
     private CityInfoInnerDTO cityInfo;
-    private final List<HobbyInnerDTO> hobbies = new ArrayList<>();
-    private final List<PhoneInnerDTO> phones = new ArrayList<>();
+    private  List<HobbyInnerDTO> hobbies = new ArrayList<>();
+    private  List<PhoneInnerDTO> phones = new ArrayList<>();
 
     public PersonDTO(int id, String email, String firstName, String lastName, AddressInnerDTO address) {
         this.id = id;
@@ -37,13 +37,29 @@ public class PersonDTO implements Serializable {
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.address = new AddressInnerDTO(person.getAddress());
+       /* this.address = new AddressInnerDTO(person.getAddress());
         person.getHobbies().forEach(hobby -> {
             hobbies.add(new HobbyInnerDTO(hobby));
         });
         person.getPhones().forEach(phone -> {
             phones.add(new PhoneInnerDTO(phone));
-        });
+        }); */
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 
