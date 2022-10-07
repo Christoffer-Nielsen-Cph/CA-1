@@ -81,7 +81,7 @@ public class Person {
         this.firstName = personDTO.getFirstName();
         this.lastName = personDTO.getLastName();
     }
-
+/*
    public Person(PersonDTO personDTO) {
        this.id = personDTO.getId();
        this.email = personDTO.getEmail();
@@ -90,6 +90,15 @@ public class Person {
        this.address = new Address(personDTO.getAddress().getId(), personDTO.getAddress().getAddress(), personDTO.getAddress().getAdditionalInfo(),
                new Cityinfo(personDTO.getAddress().getCityInfo().getId(), personDTO.getAddress().getCityInfo().getZipCode(),
                        personDTO.getAddress().getCityInfo().getCity()));
+   }
+
+ */
+
+   public Person (PersonDTO personDTO){
+        this.id = personDTO.getId();
+       this.email = personDTO.getEmail();
+       this.firstName = personDTO.getFirstName();
+       this.lastName = personDTO.getLastName();
    }
 
     public int getId() {
