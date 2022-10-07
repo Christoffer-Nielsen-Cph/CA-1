@@ -103,8 +103,8 @@ public class PersonResourceTest {
 
     @Test
     public void testServerIsUp() {
-        System.out.println("testing is server up(Anders test)");
-        given().when().get("/person").then().statusCode(200);
+        System.out.println("testing is server up");
+        given().when().get("/person/all").then().statusCode(200);
     }
 
     //TODO: remember to change the expected result after what is in your database
