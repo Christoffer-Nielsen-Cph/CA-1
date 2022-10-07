@@ -1,4 +1,4 @@
-package rest;
+/* package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -157,7 +157,7 @@ public class PersonResourceTest {
                .body("firstName",equalTo("Scooby") )
                .body("lastName", equalTo("Doo"));
     }
-     */
+     */ /*
     @Test
     public void testDeleteParent() {
         given()
@@ -169,3 +169,4 @@ public class PersonResourceTest {
                 .body("id",equalTo(p2.getId()));
     }
 }
+*/
