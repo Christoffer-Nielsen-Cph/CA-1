@@ -48,24 +48,6 @@ public class PersonFacade  {
         return emf.createEntityManager();
     }
 
-
-    public Person create(Person person){
-
-        EntityManager em = getEntityManager();
-        Person newPerson = new Person(person.getEmail(),person.getFirstName(),person.getLastName(),person.getAddress());
-
-        try {
-
-            em.getTransaction().begin();
-            em.persist(newPerson);
-            em.getTransaction().commit();
-
-        } finally {
-            em.close();
-        }
-        return person;
-    }
-
     public PersonDTO createDTOPerson (PersonDTO personDTO){
         EntityManager em = getEntityManager();
         Set<Hobby> hobbies = new LinkedHashSet<>();
@@ -106,6 +88,21 @@ public class PersonFacade  {
             em.close();
         }
         return new PersonDTO(person);
+    }
+
+    public Person create(Person person){
+
+        EntityManager em = getEntityManager();
+        Person newPerson = new Person(person.getEmail(),person.getFirstName(),person.getFirstName());
+
+        try {
+            em.getTransaction().begin();
+            em.persist(newPerson);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return person;
     }
 
 
