@@ -48,7 +48,7 @@ public class PersonFacade  {
         return emf.createEntityManager();
     }
 
-    public PersonDTO createDTOPerson (PersonDTO personDTO){
+    public PersonDTO createDTOPerson (PersonDTO personDTO) {
         EntityManager em = getEntityManager();
         Set<Hobby> hobbies = new LinkedHashSet<>();
         personDTO.getHobbies().forEach(hobbyInnerDTO -> {

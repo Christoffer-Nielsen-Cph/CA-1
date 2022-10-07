@@ -1,6 +1,7 @@
 package dtos;
 
 import entities.*;
+import errorhandling.EntityNotFoundException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,13 +38,17 @@ public class PersonDTO implements Serializable {
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-       /* this.address = new AddressInnerDTO(person.getAddress());
+        if(person.getAddress() != null){
+            this.address = new AddressInnerDTO(person.getAddress());
+        }
+        //this.address = new AddressInnerDTO(person.getAddress());
+
         person.getHobbies().forEach(hobby -> {
             hobbies.add(new HobbyInnerDTO(hobby));
         });
         person.getPhones().forEach(phone -> {
             phones.add(new PhoneInnerDTO(phone));
-        }); */
+        });
     }
 
     public void setId(int id) {

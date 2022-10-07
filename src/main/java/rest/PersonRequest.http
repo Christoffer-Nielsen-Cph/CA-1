@@ -18,7 +18,7 @@ GET http://localhost:8080/rest_snippets_war_exploded/api/person/99999999
 Accept: application/json
 
 ###
-POST https://cphcn332.dk/ca1_application/api/person/addperson
+POST http://localhost:8080/ca1_application_war_exploded/api/person/addperson
 Content-Type: application/json
 
 {
@@ -40,6 +40,6 @@ Content-Type: application/json
 {"email": "adolf@dk.dk","firstName": "Adolf","lastName": "Martin"}
 
 ###
-DELETE http://localhost:8080/ca1_application_war_exploded/api/person/33
+DELETE http://localhost:8080/ca1_application_war_exploded/api/person/31
 Content-Type: application/json
 
