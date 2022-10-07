@@ -45,9 +45,9 @@ public class PersonResource {
     @Path("/addperson")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response create(String content) {
-        Person person = GSON.fromJson(content, Person.class);
-        Person newPerson = FACADE.create(person);
-        return Response.ok().entity(GSON.toJson(newPerson)).build();
+        PersonDTO personDTO = GSON.fromJson(content, PersonDTO.class);
+        PersonDTO newPersonDTO = FACADE.createDTOPersonTest(personDTO);
+        return Response.ok().entity(GSON.toJson(newPersonDTO)).build();
     }
 
 
