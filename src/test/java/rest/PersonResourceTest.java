@@ -13,11 +13,7 @@ import entities.Person;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.jupiter.api.*;
@@ -27,7 +23,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -36,14 +31,11 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import io.restassured.RestAssured.*;
-import io.restassured.matcher.RestAssuredMatchers.*;
-import org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 
-public class RestAssurered {
+public class PersonResourceTest {
 
 
     private static final int SERVER_PORT = 7777;
@@ -111,13 +103,13 @@ public class RestAssurered {
 
     @Test
     public void testServerIsUp() {
-        System.out.println("testing is server up(Anders test)");
-        given().when().get("/person").then().statusCode(200);
+        System.out.println("testing is server up");
+        given().when().get("/person/all").then().statusCode(200);
     }
 
     //TODO: remember to change the expected result after what is in your database
     @Test
-    public void AndersTestCheckoutPersonNameByID() {
+    public void CheckoutPersonNameByID() {
       System.out.println("we're checking if we can take the firstname from localhost");
       try {
           System.out.println("HERE IT IS");
@@ -145,13 +137,35 @@ public class RestAssurered {
         personDTOs = given()
                 .contentType("application/json")
                 .when()
-                .get("/person")
+                .get("/person/all")
                 .then()
                 .extract().body().jsonPath().getList("", PersonDTO.class);
         assertEquals(personDTOs.size(), 2);
     }
+    /*
     @Test
     public void TestUpdatePerson(){
-
+        p1.setFirstName("Scooby");
+        p2.setLastName("Doo");
+       given()
+                .contentType("application/json")
+               .put("/person/{id}",p1.getId());
+       given()
+               .get("/person/{id}", p1.getId())
+               .then()
+               .assertThat()
+               .body("firstName",equalTo("Scooby") )
+               .body("lastName", equalTo("Doo"));
+    }
+     */
+    @Test
+    public void testDeleteParent() {
+        given()
+                .contentType(ContentType.JSON)
+                .pathParam("id", p2.getId())
+                .delete("/person/{id}")
+                .then()
+                .statusCode(200)
+                .body("id",equalTo(p2.getId()));
     }
 }
