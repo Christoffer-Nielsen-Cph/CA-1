@@ -95,6 +95,19 @@ public class PersonFacade  {
         return new PersonDTO(person);
     }
 
+    public PersonDTO createDTOPersonTest (PersonDTO personDTO){
+        EntityManager em = getEntityManager();
+        Person person = new Person(personDTO);
+        try{
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(person);
+    }
+
 
    /* public PersonDTO getPersonByPhone(int phoneNumber){
         EntityManager em = getEntityManager();

@@ -22,38 +22,38 @@ POST http://localhost:8080/ca1_application_war_exploded/api/person/addperson
 Content-Type: application/json
 
 {
-  "email": "test@test.dk",
+  "email": "TEST@test.dk",
   "firstName": "test",
   "lastName": "test",
   "address": {
-    "id": 1,
+    "id": 3,
     "address": "test-addresse",
     "additionalInfo": "test",
     "cityInfo": {
-      "id": 1,
+      "id": 12,
       "zipcode": "2150",
       "city": "Randers"
     }
   },
   "hobbies": [
     {
-      "id": 1,
-      "description": "PaintBall"
+      "id": 2,
+      "description": "Fitten"
     }
   ],
   "phones": [
     {
-      "number": 91169420,
+      "number": 91169136,
       "description": "iphone"
     }
   ]
 }
 
 ###
-POST http://localhost:8080/ca1_application_war_exploded/api/address
-Content-Type: application/json
+###POST http://localhost:8080/ca1_application_war_exploded/api/address
+###Content-Type: application/json
 
-{"address": "gunarvej", "additionalInfo": "ingen"}
+###{"address": "gunarvej", "additionalInfo": "ingen"}
 ###
 
 PUT http://localhost:8080/ca1_application_war_exploded/api/person/33
