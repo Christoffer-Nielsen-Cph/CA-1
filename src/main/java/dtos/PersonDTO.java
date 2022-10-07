@@ -37,9 +37,7 @@ public class PersonDTO implements Serializable {
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        if(this.address != null){
-            this.address = new AddressInnerDTO(person.getAddress());
-        }
+        this.address = new AddressInnerDTO(person.getAddress());
         person.getHobbies().forEach(hobby -> {
             hobbies.add(new HobbyInnerDTO(hobby));
         });
