@@ -38,7 +38,7 @@ public class PersonResource {
         PersonDTO p = FACADE.getPersonById(id);
         return Response.ok().entity(GSON.toJson(p)).build();
     }
-
+//
 
     @POST
     @Produces({MediaType.APPLICATION_JSON})
